@@ -1,0 +1,9 @@
+streamlit
+chromadb
+transformers
+torch
+sentence-transformers
+scikit-learn
+python-dotenv
+tree-sitter
+tree-sitter-python

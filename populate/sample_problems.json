@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers such that they add up to target. You may assume that each input has exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+    "difficulty": "Easy",
+    "tags": ["Array", "Hash Table"],
+    "solution": "def two_sum(nums, target):\n    # Brute force: check every pair. O(N^2) time, O(1) space.\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n    return []"
+  },
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers such that they add up to target. You may assume that each input has exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+    "difficulty": "Easy",
+    "tags": ["Array", "Hash Table"],
+    "solution": "def two_sum(nums, target):\n    # One-pass hash map: store value -> index. O(N) time, O(N) space.\n    seen = {}\n    for i, value in enumerate(nums):\n        complement = target - value\n        if complement in seen:\n            return [seen[complement], i]\n        seen[value] = i\n    return []"
+  },
+  {
+    "id": 20,
+    "title": "Valid Parentheses",
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if open brackets are closed by the same type of brackets, open brackets are closed in the correct order, and every close bracket has a corresponding open bracket of the same type.",
+    "difficulty": "Easy",
+    "tags": ["String", "Stack"],
+    "solution": "def is_valid(s):\n    # Stack of expected closing brackets. O(N) time, O(N) space.\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for ch in s:\n        if ch in pairs:\n            if not stack or stack[-1] != pairs[ch]:\n                return False\n            stack.pop()\n        else:\n            stack.append(ch)\n    return not stack"
+  },
+  {
+    "id": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "description": "Given a string s, find the length of the longest substring without repeating characters.",
+    "difficulty": "Medium",
+    "tags": ["Hash Table", "String", "Sliding Window"],
+    "solution": "def length_of_longest_substring(s):\n    # Sliding window with last-seen index map. O(N) time, O(min(N, alphabet)) space.\n    last_seen = {}\n    left = 0\n    best = 0\n    for right, ch in enumerate(s):\n        if ch in last_seen and last_seen[ch] >= left:\n            left = last_seen[ch] + 1\n        last_seen[ch] = right\n        best = max(best, right - left + 1)\n    return best"
+  },
+  {
+    "id": 167,
+    "title": "Two Sum II - Input Array Is Sorted",
+    "description": "Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2]. Your solution must use only constant extra space.",
+    "difficulty": "Medium",
+    "tags": ["Array", "Two Pointers", "Binary Search"],
+    "solution": "def two_sum_sorted(numbers, target):\n    # Two pointers converging from both ends. O(N) time, O(1) space.\n    left, right = 0, len(numbers) - 1\n    while left < right:\n        current = numbers[left] + numbers[right]\n        if current == target:\n            return [left + 1, right + 1]\n        if current < target:\n            left += 1\n        else:\n            right -= 1\n    return []"
+  },
+  {
+    "id": 56,
+    "title": "Merge Intervals",
+    "description": "Given an array of intervals where intervals[i] = [start_i, end_i], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+    "difficulty": "Medium",
+    "tags": ["Array", "Sorting"],
+    "solution": "def merge(intervals):\n    # Sort by start, then sweep and extend the last merged interval. O(N log N) time.\n    intervals.sort(key=lambda interval: interval[0])\n    merged = []\n    for start, end in intervals:\n        if merged and start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged"
+  },
+  {
+    "id": 42,
+    "title": "Trapping Rain Water",
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "difficulty": "Hard",
+    "tags": ["Array", "Two Pointers", "Dynamic Programming", "Stack"],
+    "solution": "def trap(height):\n    # Prefix/suffix maxima arrays. O(N) time, O(N) space.\n    n = len(height)\n    if n == 0:\n        return 0\n    left_max = [0] * n\n    right_max = [0] * n\n    left_max[0] = height[0]\n    for i in range(1, n):\n        left_max[i] = max(left_max[i - 1], height[i])\n    right_max[n - 1] = height[n - 1]\n    for i in range(n - 2, -1, -1):\n        right_max[i] = max(right_max[i + 1], height[i])\n    water = 0\n    for i in range(n):\n        water += min(left_max[i], right_max[i]) - height[i]\n    return water"
+  },
+  {
+    "id": 42,
+    "title": "Trapping Rain Water",
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "difficulty": "Hard",
+    "tags": ["Array", "Two Pointers", "Dynamic Programming", "Stack"],
+    "solution": "def trap(height):\n    # Two pointers tracking running maxima from each side. O(N) time, O(1) space.\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            left_max = max(left_max, height[left])\n            water += left_max - height[left]\n            left += 1\n        else:\n            right_max = max(right_max, height[right])\n            water += right_max - height[right]\n            right -= 1\n    return water"
+  },
+  {
+    "id": 200,
+    "title": "Number of Islands",
+    "description": "Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.",
+    "difficulty": "Medium",
+    "tags": ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"],
+    "solution": "def num_islands(grid):\n    # Iterative DFS that sinks each visited island. O(M*N) time.\n    if not grid:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] != '1':\n                continue\n            count += 1\n            stack = [(r, c)]\n            grid[r][c] = '0'\n            while stack:\n                cr, cc = stack.pop()\n                for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                    nr, nc = cr + dr, cc + dc\n                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                        grid[nr][nc] = '0'\n                        stack.append((nr, nc))\n    return count"
+  }
+]
