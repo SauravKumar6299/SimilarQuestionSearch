@@ -2,7 +2,6 @@
   {
     "id": 1,
     "title": "Two Sum",
-    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target. Each input has exactly one solution and the same element may not be used twice.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -13,7 +12,6 @@
   {
     "id": 1,
     "title": "Two Sum",
-    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target. Each input has exactly one solution and the same element may not be used twice.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -24,7 +22,6 @@
   {
     "id": 217,
     "title": "Contains Duplicate",
-    "description": "Given an integer array nums, return true if any value appears at least twice in the array, and false if every element is distinct.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -36,7 +33,6 @@
   {
     "id": 217,
     "title": "Contains Duplicate",
-    "description": "Given an integer array nums, return true if any value appears at least twice in the array, and false if every element is distinct.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -48,7 +44,6 @@
   {
     "id": 242,
     "title": "Valid Anagram",
-    "description": "Given two strings s and t, return true if t is an anagram of s (uses exactly the same characters with the same counts), and false otherwise.",
     "difficulty": "Easy",
     "tags": [
       "Hash Table",
@@ -60,7 +55,6 @@
   {
     "id": 49,
     "title": "Group Anagrams",
-    "description": "Given an array of strings strs, group the anagrams together. You can return the groups in any order.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -73,7 +67,6 @@
   {
     "id": 347,
     "title": "Top K Frequent Elements",
-    "description": "Given an integer array nums and an integer k, return the k most frequent elements in any order.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -86,7 +79,6 @@
   {
     "id": 238,
     "title": "Product of Array Except Self",
-    "description": "Given an integer array nums, return an array answer such that answer[i] is the product of all elements of nums except nums[i], without using division and in O(n) time.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -97,7 +89,6 @@
   {
     "id": 36,
     "title": "Valid Sudoku",
-    "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated: each row, each column, and each of the nine 3 x 3 sub-boxes must contain the digits 1-9 without repetition. Empty cells are represented by '.'.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -109,7 +100,6 @@
   {
     "id": 128,
     "title": "Longest Consecutive Sequence",
-    "description": "Given an unsorted array of integers nums, return the length of the longest run of consecutive integers. The algorithm must run in O(n) time.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -121,7 +111,6 @@
   {
     "id": 169,
     "title": "Majority Element",
-    "description": "Given an array nums of size n, return the majority element, which appears more than n / 2 times. The majority element always exists.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -133,7 +122,6 @@
   {
     "id": 41,
     "title": "First Missing Positive",
-    "description": "Given an unsorted integer array nums, return the smallest positive integer that is not present. The algorithm must run in O(n) time and use O(1) auxiliary space.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -144,7 +132,6 @@
   {
     "id": 560,
     "title": "Subarray Sum Equals K",
-    "description": "Given an array of integers nums and an integer k, return the total number of contiguous subarrays whose sum equals k.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -156,7 +143,6 @@
   {
     "id": 88,
     "title": "Merge Sorted Array",
-    "description": "You are given two sorted integer arrays nums1 and nums2 and their element counts m and n. nums1 has length m + n with trailing zeros as space. Merge nums2 into nums1 in place so the result is sorted.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -168,7 +154,6 @@
   {
     "id": 189,
     "title": "Rotate Array",
-    "description": "Given an integer array nums, rotate the array to the right by k steps in place.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -180,7 +165,6 @@
   {
     "id": 54,
     "title": "Spiral Matrix",
-    "description": "Given an m x n matrix, return all of its elements in spiral order (clockwise from the top-left).",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -192,7 +176,6 @@
   {
     "id": 48,
     "title": "Rotate Image",
-    "description": "You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees clockwise in place.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -204,7 +187,6 @@
   {
     "id": 125,
     "title": "Valid Palindrome",
-    "description": "A phrase is a palindrome if, after lowercasing and removing all non-alphanumeric characters, it reads the same forward and backward. Given a string s, return true if it is a palindrome.",
     "difficulty": "Easy",
     "tags": [
       "Two Pointers",
@@ -215,7 +197,6 @@
   {
     "id": 167,
     "title": "Two Sum II - Input Array Is Sorted",
-    "description": "Given a 1-indexed array of integers numbers sorted in non-decreasing order, find two numbers that add up to target and return their indices [index1, index2]. Use only constant extra space.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -227,7 +208,6 @@
   {
     "id": 15,
     "title": "3Sum",
-    "description": "Given an integer array nums, return all unique triplets [nums[i], nums[j], nums[k]] with distinct indices such that their sum is zero.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -239,7 +219,6 @@
   {
     "id": 11,
     "title": "Container With Most Water",
-    "description": "Given n vertical lines with heights height[i], find two lines that together with the x-axis form a container holding the most water, and return that maximum amount.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -251,7 +230,6 @@
   {
     "id": 42,
     "title": "Trapping Rain Water",
-    "description": "Given n non-negative integers representing an elevation map where each bar has width 1, compute how much water it can trap after raining.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -264,7 +242,6 @@
   {
     "id": 42,
     "title": "Trapping Rain Water",
-    "description": "Given n non-negative integers representing an elevation map where each bar has width 1, compute how much water it can trap after raining.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -277,7 +254,6 @@
   {
     "id": 283,
     "title": "Move Zeroes",
-    "description": "Given an integer array nums, move all 0's to the end while keeping the relative order of the non-zero elements. Do it in place.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -288,7 +264,6 @@
   {
     "id": 75,
     "title": "Sort Colors",
-    "description": "Given an array nums with n objects colored red (0), white (1), or blue (2), sort them in place so objects of the same color are adjacent, in the order red, white, blue, without using a library sort.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -300,7 +275,6 @@
   {
     "id": 121,
     "title": "Best Time to Buy and Sell Stock",
-    "description": "Given an array prices where prices[i] is a stock price on day i, choose one day to buy and a later day to sell to maximize profit. Return the maximum profit, or 0 if no profit is possible.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -312,7 +286,6 @@
   {
     "id": 3,
     "title": "Longest Substring Without Repeating Characters",
-    "description": "Given a string s, find the length of the longest substring without repeating characters.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -324,7 +297,6 @@
   {
     "id": 424,
     "title": "Longest Repeating Character Replacement",
-    "description": "Given a string s of uppercase letters and an integer k, you may change at most k characters to any other uppercase letter. Return the length of the longest substring containing a single repeated letter.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -336,7 +308,6 @@
   {
     "id": 567,
     "title": "Permutation in String",
-    "description": "Given two strings s1 and s2, return true if s2 contains a permutation of s1 as a contiguous substring.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -349,7 +320,6 @@
   {
     "id": 76,
     "title": "Minimum Window Substring",
-    "description": "Given strings s and t, return the minimum window substring of s that contains every character of t (including duplicates). Return an empty string if no such window exists.",
     "difficulty": "Hard",
     "tags": [
       "Hash Table",
@@ -361,7 +331,6 @@
   {
     "id": 239,
     "title": "Sliding Window Maximum",
-    "description": "Given an array nums and a sliding window of size k moving from left to right one position at a time, return the maximum value in each window.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -374,7 +343,6 @@
   {
     "id": 209,
     "title": "Minimum Size Subarray Sum",
-    "description": "Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray whose sum is greater than or equal to target, or 0 if there is none.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -387,7 +355,6 @@
   {
     "id": 20,
     "title": "Valid Parentheses",
-    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine whether every bracket is closed by the same type of bracket in the correct order.",
     "difficulty": "Easy",
     "tags": [
       "String",
@@ -398,7 +365,6 @@
   {
     "id": 155,
     "title": "Min Stack",
-    "description": "Design a stack that supports push, pop, top, and retrieving the minimum element, each in constant time.",
     "difficulty": "Medium",
     "tags": [
       "Stack",
@@ -409,7 +375,6 @@
   {
     "id": 150,
     "title": "Evaluate Reverse Polish Notation",
-    "description": "Evaluate an arithmetic expression given in Reverse Polish Notation as an array of tokens. Valid operators are +, -, *, and /, and division truncates toward zero.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -421,7 +386,6 @@
   {
     "id": 22,
     "title": "Generate Parentheses",
-    "description": "Given n pairs of parentheses, generate all combinations of well-formed parentheses.",
     "difficulty": "Medium",
     "tags": [
       "String",
@@ -433,7 +397,6 @@
   {
     "id": 739,
     "title": "Daily Temperatures",
-    "description": "Given an array temperatures, return an array answer where answer[i] is the number of days after day i until a warmer temperature, or 0 if there is no future warmer day.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -445,7 +408,6 @@
   {
     "id": 853,
     "title": "Car Fleet",
-    "description": "n cars drive toward a target at mile target. Car i starts at position[i] with speed speed[i]. A car can catch up to a slower car ahead and then drives at its speed as one fleet. Return the number of fleets that arrive at the destination.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -458,7 +420,6 @@
   {
     "id": 84,
     "title": "Largest Rectangle in Histogram",
-    "description": "Given an array heights representing histogram bar heights where each bar has width 1, return the area of the largest rectangle in the histogram.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -470,7 +431,6 @@
   {
     "id": 704,
     "title": "Binary Search",
-    "description": "Given a sorted array of integers nums and a target, return the index of target if it exists, otherwise return -1. The algorithm must run in O(log n) time.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -481,7 +441,6 @@
   {
     "id": 74,
     "title": "Search a 2D Matrix",
-    "description": "You are given an m x n matrix where each row is sorted and the first value of each row is greater than the last value of the previous row. Return true if target is in the matrix, in O(log(m * n)) time.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -493,7 +452,6 @@
   {
     "id": 875,
     "title": "Koko Eating Bananas",
-    "description": "Koko has piles of bananas and h hours. Each hour she eats up to k bananas from one pile. Return the minimum integer eating speed k that lets her finish all piles within h hours.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -504,7 +462,6 @@
   {
     "id": 153,
     "title": "Find Minimum in Rotated Sorted Array",
-    "description": "A sorted array of unique values has been rotated between 1 and n times. Return its minimum element in O(log n) time.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -515,7 +472,6 @@
   {
     "id": 33,
     "title": "Search in Rotated Sorted Array",
-    "description": "A sorted array of distinct integers may be rotated at an unknown pivot. Given the array and a target, return its index or -1, in O(log n) time.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -526,7 +482,6 @@
   {
     "id": 981,
     "title": "Time Based Key-Value Store",
-    "description": "Design a key-value store that keeps multiple values per key at different timestamps. get(key, timestamp) returns the value set at the largest timestamp <= timestamp, or an empty string. Timestamps of set calls are strictly increasing.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -539,7 +494,6 @@
   {
     "id": 4,
     "title": "Median of Two Sorted Arrays",
-    "description": "Given two sorted arrays nums1 and nums2 of sizes m and n, return the median of the two arrays combined. The overall run time should be O(log(m + n)).",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -551,7 +505,6 @@
   {
     "id": 35,
     "title": "Search Insert Position",
-    "description": "Given a sorted array of distinct integers and a target, return the index if the target is found; otherwise return the index where it would be inserted to keep the array sorted. Use O(log n) time.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -562,7 +515,6 @@
   {
     "id": 56,
     "title": "Merge Intervals",
-    "description": "Given an array of intervals where intervals[i] = [start_i, end_i], merge all overlapping intervals and return an array of the non-overlapping intervals that cover all the input.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -573,7 +525,6 @@
   {
     "id": 57,
     "title": "Insert Interval",
-    "description": "Given a sorted list of non-overlapping intervals and a new interval, insert the new interval so the list stays sorted and non-overlapping, merging where necessary.",
     "difficulty": "Medium",
     "tags": [
       "Array"
@@ -583,7 +534,6 @@
   {
     "id": 435,
     "title": "Non-overlapping Intervals",
-    "description": "Given an array of intervals, return the minimum number of intervals to remove so the rest do not overlap.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -596,7 +546,6 @@
   {
     "id": 206,
     "title": "Reverse Linked List",
-    "description": "Given the head of a singly linked list, reverse the list and return the new head.",
     "difficulty": "Easy",
     "tags": [
       "Linked List",
@@ -607,7 +556,6 @@
   {
     "id": 206,
     "title": "Reverse Linked List",
-    "description": "Given the head of a singly linked list, reverse the list and return the new head.",
     "difficulty": "Easy",
     "tags": [
       "Linked List",
@@ -618,7 +566,6 @@
   {
     "id": 21,
     "title": "Merge Two Sorted Lists",
-    "description": "Merge two sorted linked lists list1 and list2 into one sorted list made by splicing their nodes, and return its head.",
     "difficulty": "Easy",
     "tags": [
       "Linked List",
@@ -629,7 +576,6 @@
   {
     "id": 143,
     "title": "Reorder List",
-    "description": "Given the head of a list L0 -> L1 -> ... -> Ln, reorder it in place to L0 -> Ln -> L1 -> Ln-1 -> ...",
     "difficulty": "Medium",
     "tags": [
       "Linked List",
@@ -642,7 +588,6 @@
   {
     "id": 19,
     "title": "Remove Nth Node From End of List",
-    "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
     "difficulty": "Medium",
     "tags": [
       "Linked List",
@@ -653,7 +598,6 @@
   {
     "id": 141,
     "title": "Linked List Cycle",
-    "description": "Given the head of a linked list, determine whether the list contains a cycle.",
     "difficulty": "Easy",
     "tags": [
       "Hash Table",
@@ -665,7 +609,6 @@
   {
     "id": 2,
     "title": "Add Two Numbers",
-    "description": "Two non-empty linked lists represent non-negative integers with digits stored in reverse order. Add the two numbers and return the sum as a linked list in the same format.",
     "difficulty": "Medium",
     "tags": [
       "Linked List",
@@ -677,7 +620,6 @@
   {
     "id": 23,
     "title": "Merge k Sorted Lists",
-    "description": "You are given an array of k linked lists, each sorted in ascending order. Merge them into one sorted linked list and return it.",
     "difficulty": "Hard",
     "tags": [
       "Linked List",
@@ -690,7 +632,6 @@
   {
     "id": 146,
     "title": "LRU Cache",
-    "description": "Design a Least Recently Used cache with a positive capacity. get(key) returns the value or -1, and put(key, value) inserts or updates, evicting the least recently used key when over capacity. Both operations must run in O(1) average time.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -703,7 +644,6 @@
   {
     "id": 226,
     "title": "Invert Binary Tree",
-    "description": "Given the root of a binary tree, invert the tree (mirror it left to right) and return its root.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -716,7 +656,6 @@
   {
     "id": 104,
     "title": "Maximum Depth of Binary Tree",
-    "description": "Given the root of a binary tree, return its maximum depth: the number of nodes on the longest path from the root down to a leaf.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -729,7 +668,6 @@
   {
     "id": 543,
     "title": "Diameter of Binary Tree",
-    "description": "Given the root of a binary tree, return the length (in edges) of the longest path between any two nodes. The path may or may not pass through the root.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -741,7 +679,6 @@
   {
     "id": 110,
     "title": "Balanced Binary Tree",
-    "description": "Given a binary tree, determine if it is height-balanced: for every node, the heights of its two subtrees differ by at most one.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -753,7 +690,6 @@
   {
     "id": 100,
     "title": "Same Tree",
-    "description": "Given the roots of two binary trees p and q, return true if they are structurally identical and their nodes have the same values.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -766,7 +702,6 @@
   {
     "id": 235,
     "title": "Lowest Common Ancestor of a Binary Search Tree",
-    "description": "Given a binary search tree and two of its nodes p and q, return their lowest common ancestor: the deepest node that has both p and q as descendants (a node may be a descendant of itself).",
     "difficulty": "Medium",
     "tags": [
       "Tree",
@@ -779,7 +714,6 @@
   {
     "id": 102,
     "title": "Binary Tree Level Order Traversal",
-    "description": "Given the root of a binary tree, return the level order traversal of its node values (left to right, level by level).",
     "difficulty": "Medium",
     "tags": [
       "Tree",
@@ -791,7 +725,6 @@
   {
     "id": 199,
     "title": "Binary Tree Right Side View",
-    "description": "Given the root of a binary tree, imagine standing on its right side and return the values of the nodes you can see, ordered from top to bottom.",
     "difficulty": "Medium",
     "tags": [
       "Tree",
@@ -804,7 +737,6 @@
   {
     "id": 98,
     "title": "Validate Binary Search Tree",
-    "description": "Given the root of a binary tree, determine if it is a valid binary search tree: every left subtree holds strictly smaller keys and every right subtree strictly larger keys.",
     "difficulty": "Medium",
     "tags": [
       "Tree",
@@ -817,7 +749,6 @@
   {
     "id": 230,
     "title": "Kth Smallest Element in a BST",
-    "description": "Given the root of a binary search tree and an integer k, return the kth smallest value (1-indexed).",
     "difficulty": "Medium",
     "tags": [
       "Tree",
@@ -830,7 +761,6 @@
   {
     "id": 105,
     "title": "Construct Binary Tree from Preorder and Inorder Traversal",
-    "description": "Given two integer arrays preorder and inorder (unique values) that are the preorder and inorder traversals of the same binary tree, construct and return the tree.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -844,7 +774,6 @@
   {
     "id": 124,
     "title": "Binary Tree Maximum Path Sum",
-    "description": "A path in a binary tree is a sequence of adjacent nodes, each appearing at most once, and need not pass through the root. Given the root, return the maximum sum of node values over any non-empty path.",
     "difficulty": "Hard",
     "tags": [
       "Dynamic Programming",
@@ -857,7 +786,6 @@
   {
     "id": 297,
     "title": "Serialize and Deserialize Binary Tree",
-    "description": "Design an algorithm to serialize a binary tree to a string and deserialize that string back to the original tree structure.",
     "difficulty": "Hard",
     "tags": [
       "String",
@@ -872,7 +800,6 @@
   {
     "id": 703,
     "title": "Kth Largest Element in a Stream",
-    "description": "Design a class that finds the kth largest element in a stream. It is constructed with k and an initial list of numbers, and add(val) appends a number and returns the current kth largest element.",
     "difficulty": "Easy",
     "tags": [
       "Tree",
@@ -886,7 +813,6 @@
   {
     "id": 1046,
     "title": "Last Stone Weight",
-    "description": "Each turn, smash the two heaviest stones x <= y together: equal stones are both destroyed, otherwise a stone of weight y - x remains. Return the weight of the last stone, or 0 if none remain.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -897,7 +823,6 @@
   {
     "id": 973,
     "title": "K Closest Points to Origin",
-    "description": "Given an array of points on the X-Y plane and an integer k, return the k points closest to the origin (0, 0) by Euclidean distance, in any order.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -912,7 +837,6 @@
   {
     "id": 215,
     "title": "Kth Largest Element in an Array",
-    "description": "Given an integer array nums and an integer k, return the kth largest element in sorted order (not the kth distinct element).",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -926,7 +850,6 @@
   {
     "id": 215,
     "title": "Kth Largest Element in an Array",
-    "description": "Given an integer array nums and an integer k, return the kth largest element in sorted order (not the kth distinct element).",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -940,7 +863,6 @@
   {
     "id": 295,
     "title": "Find Median from Data Stream",
-    "description": "Design a data structure that supports adding integers from a stream (add_num) and returning the median of all elements so far (find_median).",
     "difficulty": "Hard",
     "tags": [
       "Two Pointers",
@@ -954,7 +876,6 @@
   {
     "id": 621,
     "title": "Task Scheduler",
-    "description": "Given CPU tasks labeled with letters and a cooldown n, identical tasks must be at least n intervals apart. Each interval runs one task or idles. Return the minimum number of intervals to finish all tasks.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -969,7 +890,6 @@
   {
     "id": 208,
     "title": "Implement Trie (Prefix Tree)",
-    "description": "Implement a trie with insert(word), search(word) which returns true if the exact word was inserted, and starts_with(prefix) which returns true if any inserted word has that prefix.",
     "difficulty": "Medium",
     "tags": [
       "Hash Table",
@@ -982,7 +902,6 @@
   {
     "id": 78,
     "title": "Subsets",
-    "description": "Given an integer array nums of unique elements, return all possible subsets (the power set), without duplicate subsets, in any order.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -994,7 +913,6 @@
   {
     "id": 39,
     "title": "Combination Sum",
-    "description": "Given an array of distinct positive integers candidates and a target, return all unique combinations of candidates summing to target. The same number may be used an unlimited number of times.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1005,7 +923,6 @@
   {
     "id": 46,
     "title": "Permutations",
-    "description": "Given an array nums of distinct integers, return all possible permutations in any order.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1016,7 +933,6 @@
   {
     "id": 79,
     "title": "Word Search",
-    "description": "Given an m x n grid of characters and a string word, return true if word can be built from letters of sequentially adjacent (horizontal or vertical) cells, using each cell at most once.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1030,7 +946,6 @@
   {
     "id": 51,
     "title": "N-Queens",
-    "description": "Place n queens on an n x n chessboard so that no two queens attack each other. Return all distinct solutions, each as a list of strings where 'Q' is a queen and '.' is empty.",
     "difficulty": "Hard",
     "tags": [
       "Array",
@@ -1041,7 +956,6 @@
   {
     "id": 200,
     "title": "Number of Islands",
-    "description": "Given an m x n grid of '1's (land) and '0's (water), return the number of islands. An island is formed by connecting adjacent land cells horizontally or vertically.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1055,7 +969,6 @@
   {
     "id": 200,
     "title": "Number of Islands",
-    "description": "Given an m x n grid of '1's (land) and '0's (water), return the number of islands. An island is formed by connecting adjacent land cells horizontally or vertically.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1069,7 +982,6 @@
   {
     "id": 695,
     "title": "Max Area of Island",
-    "description": "Given an m x n binary grid where 1 is land, return the area of the largest island (4-directionally connected land), or 0 if there is no island.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1083,7 +995,6 @@
   {
     "id": 994,
     "title": "Rotting Oranges",
-    "description": "In a grid, 0 is empty, 1 is a fresh orange and 2 is rotten. Every minute, fresh oranges adjacent to a rotten one become rotten. Return the minimum minutes until no fresh orange remains, or -1 if impossible.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1095,7 +1006,6 @@
   {
     "id": 207,
     "title": "Course Schedule",
-    "description": "There are numCourses courses labeled 0 to numCourses - 1 and prerequisite pairs [a, b] meaning b must be taken before a. Return true if it is possible to finish all courses.",
     "difficulty": "Medium",
     "tags": [
       "Depth-First Search",
@@ -1108,7 +1018,6 @@
   {
     "id": 210,
     "title": "Course Schedule II",
-    "description": "Given numCourses and prerequisite pairs [a, b] (take b before a), return an ordering of courses that finishes all of them, or an empty array if it is impossible.",
     "difficulty": "Medium",
     "tags": [
       "Depth-First Search",
@@ -1121,7 +1030,6 @@
   {
     "id": 127,
     "title": "Word Ladder",
-    "description": "Given beginWord, endWord and a word list, return the number of words in the shortest transformation sequence from beginWord to endWord, changing one letter at a time with every intermediate word in the list. Return 0 if no such sequence exists.",
     "difficulty": "Hard",
     "tags": [
       "Hash Table",
@@ -1133,7 +1041,6 @@
   {
     "id": 743,
     "title": "Network Delay Time",
-    "description": "Given a network of n nodes and directed weighted edges times[i] = (u, v, w), a signal is sent from node k. Return the minimum time for all n nodes to receive it, or -1 if some node is unreachable.",
     "difficulty": "Medium",
     "tags": [
       "Depth-First Search",
@@ -1147,7 +1054,6 @@
   {
     "id": 70,
     "title": "Climbing Stairs",
-    "description": "You are climbing a staircase with n steps and can climb 1 or 2 steps at a time. Return the number of distinct ways to reach the top.",
     "difficulty": "Easy",
     "tags": [
       "Math",
@@ -1159,7 +1065,6 @@
   {
     "id": 70,
     "title": "Climbing Stairs",
-    "description": "You are climbing a staircase with n steps and can climb 1 or 2 steps at a time. Return the number of distinct ways to reach the top.",
     "difficulty": "Easy",
     "tags": [
       "Math",
@@ -1171,7 +1076,6 @@
   {
     "id": 198,
     "title": "House Robber",
-    "description": "Given an array nums of money in each house along a street, return the maximum amount you can rob without robbing two adjacent houses.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1182,7 +1086,6 @@
   {
     "id": 5,
     "title": "Longest Palindromic Substring",
-    "description": "Given a string s, return the longest palindromic substring in s.",
     "difficulty": "Medium",
     "tags": [
       "Two Pointers",
@@ -1194,7 +1097,6 @@
   {
     "id": 322,
     "title": "Coin Change",
-    "description": "Given coin denominations and a total amount, return the fewest coins needed to make that amount, or -1 if it cannot be made. Each coin may be used unlimited times.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1206,7 +1108,6 @@
   {
     "id": 139,
     "title": "Word Break",
-    "description": "Given a string s and a dictionary wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words (words may be reused).",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1221,7 +1122,6 @@
   {
     "id": 300,
     "title": "Longest Increasing Subsequence",
-    "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1233,7 +1133,6 @@
   {
     "id": 300,
     "title": "Longest Increasing Subsequence",
-    "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1245,7 +1144,6 @@
   {
     "id": 62,
     "title": "Unique Paths",
-    "description": "A robot on an m x n grid starts at the top-left corner and can only move right or down. Return the number of unique paths to the bottom-right corner.",
     "difficulty": "Medium",
     "tags": [
       "Math",
@@ -1257,7 +1155,6 @@
   {
     "id": 1143,
     "title": "Longest Common Subsequence",
-    "description": "Given two strings text1 and text2, return the length of their longest common subsequence, or 0 if there is none.",
     "difficulty": "Medium",
     "tags": [
       "String",
@@ -1268,7 +1165,6 @@
   {
     "id": 72,
     "title": "Edit Distance",
-    "description": "Given two strings word1 and word2, return the minimum number of single-character insertions, deletions, or replacements needed to convert word1 into word2.",
     "difficulty": "Medium",
     "tags": [
       "String",
@@ -1279,7 +1175,6 @@
   {
     "id": 53,
     "title": "Maximum Subarray",
-    "description": "Given an integer array nums, find the contiguous subarray with the largest sum and return that sum.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1291,7 +1186,6 @@
   {
     "id": 53,
     "title": "Maximum Subarray",
-    "description": "Given an integer array nums, find the contiguous subarray with the largest sum and return that sum.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1303,7 +1197,6 @@
   {
     "id": 55,
     "title": "Jump Game",
-    "description": "Given an array nums where nums[i] is the maximum jump length from index i, starting at the first index, return true if you can reach the last index.",
     "difficulty": "Medium",
     "tags": [
       "Array",
@@ -1315,7 +1208,6 @@
   {
     "id": 136,
     "title": "Single Number",
-    "description": "Given a non-empty integer array where every element appears twice except for one, find that single element using linear time and constant extra space.",
     "difficulty": "Easy",
     "tags": [
       "Array",
@@ -1326,7 +1218,6 @@
   {
     "id": 268,
     "title": "Missing Number",
-    "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing.",
     "difficulty": "Easy",
     "tags": [
       "Array",

@@ -2,8 +2,9 @@
 main.py - LeetCode Killer Similarity Engine (Streamlit frontend).
 
 Retrieval:
-    nomic-embed-code (local) embeds the query -> Chroma Cloud vector search
-    returns the 20 nearest problems, ordered by cosine distance.
+    nomic-embed-code (local) embeds the user's solution code -> Chroma Cloud
+    vector search over stored solutions (optionally filtered by tags) returns
+    the 20 nearest, ordered by cosine distance.
 
 Run from the project root:
     streamlit run main.py
@@ -14,7 +15,7 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
 
@@ -43,8 +44,8 @@ from populate.populate_db import (
 
 N_RESULTS = 20
 
-ANY_OPTION = "Any"
-DEFAULT_DIFFICULTIES = ["Easy", "Medium", "Hard"]
+MATCH_ALL = "All selected tags"
+MATCH_ANY = "Any selected tag"
 
 st.set_page_config(
     page_title="LeetCode Killer Similarity Engine",
@@ -103,9 +104,8 @@ def load_collection(_embedding_function: NomicEmbedCodeFunction) -> Any:
 
 
 @st.cache_data(ttl=600, show_spinner=False)
-def load_filter_options(_collection: Any) -> Tuple[List[str], List[str]]:
-    """Collect the distinct difficulties and tags stored in the collection."""
-    difficulties: set = set()
+def load_tag_options(_collection: Any) -> List[str]:
+    """Collect the distinct tags stored in the collection."""
     tags: set = set()
     page_size, offset = 250, 0
     while True:
@@ -115,54 +115,39 @@ def load_filter_options(_collection: Any) -> Tuple[List[str], List[str]]:
         )
         metadatas = page.get("metadatas") or []
         for metadata in metadatas:
-            if metadata.get("difficulty"):
-                difficulties.add(str(metadata["difficulty"]))
             tags.update(normalize_tags(metadata.get("tags")))
         if len(metadatas) < page_size:
             break
         offset += page_size
-
-    order = {name: rank for rank, name in enumerate(DEFAULT_DIFFICULTIES)}
-    sorted_difficulties = sorted(difficulties, key=lambda d: (order.get(d, len(order)), d))
-    return sorted_difficulties or DEFAULT_DIFFICULTIES, sorted(tags)
+    return sorted(tags)
 
 
 # ---------------------------------------------------------------------------
 # Search
 # ---------------------------------------------------------------------------
 
-def build_query_text(title: str, description: str, code: str) -> str:
-    """Mirror the layout of the indexed documents (see populate_db.build_document_text)."""
-    parts = []
-    if title:
-        parts.append(f"Title: {title}")
-    if description:
-        parts.append(f"Description: {description}")
-    if code:
-        parts.append(f"Solution:\n{code}")
-    return "\n\n".join(parts)
-
-
-def build_where_filter(difficulty: str, tags: List[str]) -> Optional[Dict[str, Any]]:
-    """Translate sidebar selections into a Chroma `where` clause (None = no filter)."""
-    clauses: List[Dict[str, Any]] = []
-    if difficulty and difficulty != ANY_OPTION:
-        clauses.append({"difficulty": {"$eq": difficulty}})
-    for tag in tags:
-        clauses.append({tag_flag_key(tag): {"$eq": True}})
+def build_where_filter(tags: List[str], match_mode: str) -> Optional[Dict[str, Any]]:
+    """Translate the selected tags into a Chroma `where` clause (None = no filter)."""
+    clauses: List[Dict[str, Any]] = [{tag_flag_key(tag): {"$eq": True}} for tag in tags]
     if not clauses:
         return None
     if len(clauses) == 1:
         return clauses[0]
-    return {"$and": clauses}
+    return {"$and" if match_mode == MATCH_ALL else "$or": clauses}
 
 
 def retrieve(
-    collection: Any, query_text: str, where: Optional[Dict[str, Any]]
+    collection: Any,
+    embedding_function: NomicEmbedCodeFunction,
+    code: str,
+    where: Optional[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
-    """Embed the query locally via the collection's Nomic function and search Chroma Cloud."""
+    """Embed the code locally and search Chroma Cloud for the nearest stored solutions."""
+    # Stored solutions are embedded without Nomic's natural-language query prefix,
+    # so the query code is embedded the same way to keep the comparison code-to-code.
+    query_embedding = embedding_function([code])[0]
     query_kwargs: Dict[str, Any] = {
-        "query_texts": [query_text],
+        "query_embeddings": [query_embedding],
         "n_results": N_RESULTS,
         "include": ["metadatas", "distances"],
     }
@@ -223,30 +208,21 @@ def render_result(item: Dict[str, Any]) -> None:
     st.code(item["solution"] or "# No stored solution", language="python", line_numbers=True)
 
 
-def render_sidebar(
-    embedder_device: str, difficulties: List[str], tags: List[str]
-) -> Tuple[str, List[str]]:
+def render_sidebar(embedder_device: str) -> None:
     with st.sidebar:
         st.header("⚙️ How it works")
         st.markdown(
             f"""
-Your title, description, and (optional) reference code are embedded **locally** with
-`nomic-ai/nomic-embed-code`. The vector is sent to the Chroma Cloud collection
-`{COLLECTION_NAME}`, which returns the **{N_RESULTS}** nearest problems by cosine distance.
+Your solution code is embedded **locally** with `nomic-ai/nomic-embed-code`, the same
+way every stored solution was embedded. Chroma Cloud (`{COLLECTION_NAME}`) returns the
+**{N_RESULTS}** stored solutions closest to it by cosine distance.
+
+Selected tags narrow the search to solutions carrying all (or any) of those tags.
             """
-        )
-        st.divider()
-        st.subheader("🔎 Optional filters")
-        difficulty = st.selectbox("Difficulty", [ANY_OPTION, *difficulties], index=0)
-        selected_tags = st.multiselect(
-            "Tags",
-            options=tags,
-            help="Results must carry every selected tag.",
         )
         st.divider()
         st.subheader("🖥️ Runtime")
         st.markdown(f"- Embedder device: `{embedder_device}`")
-    return difficulty, selected_tags
 
 
 # ---------------------------------------------------------------------------
@@ -255,7 +231,7 @@ Your title, description, and (optional) reference code are embedded **locally** 
 
 def main() -> None:
     st.title("🧠 LeetCode Killer Similarity Engine")
-    st.caption("Find similar problems with Nomic Embed Code vector search on Chroma Cloud.")
+    st.caption("Paste a solution to find the most similar stored solutions (Nomic Embed Code on Chroma Cloud).")
 
     try:
         embedding_function = load_embedding_function()
@@ -282,48 +258,47 @@ def main() -> None:
         st.stop()
 
     try:
-        difficulties, tag_options = load_filter_options(collection)
+        tag_options = load_tag_options(collection)
     except Exception as exc:
-        st.warning(f"Could not load filter options from Chroma Cloud ({exc}); using defaults.")
-        difficulties, tag_options = DEFAULT_DIFFICULTIES, []
+        st.warning(f"Could not load tags from Chroma Cloud ({exc}); tag filtering is unavailable.")
+        tag_options = []
 
-    difficulty, selected_tags = render_sidebar(
-        str(embedding_function.device), difficulties, tag_options
-    )
+    render_sidebar(str(embedding_function.device))
 
     with st.form("search_form"):
-        st.subheader("📝 Your problem")
-        title = st.text_area(
-            "Problem Title",
-            height=68,
-            placeholder="e.g. Pair With Target Sum",
-            key="problem_title",
-        )
-        description = st.text_area(
-            "Problem Description",
-            height=160,
-            placeholder="Describe the problem statement, constraints, and expected output...",
-            key="problem_description",
-        )
+        st.subheader("📝 Your solution")
         reference_code = st.text_area(
-            "Reference Code Solution (optional)",
-            height=280,
+            "Solution Code",
+            height=320,
             placeholder="def solve(nums, target):\n    ...",
             key="reference_code",
         )
-        submitted = st.form_submit_button("🚀 Find similar problems", type="primary", width="stretch")
+        tag_col, mode_col = st.columns([3, 1])
+        selected_tags = tag_col.multiselect(
+            "Tags (optional)",
+            options=tag_options,
+            placeholder="e.g. Dynamic Programming, Array",
+            key="query_tags",
+        )
+        match_mode = mode_col.radio(
+            "Tag match",
+            [MATCH_ALL, MATCH_ANY],
+            key="tag_match_mode",
+            help="All: results carry every selected tag. Any: results carry at least one.",
+        )
+        submitted = st.form_submit_button("🚀 Find similar solutions", type="primary", width="stretch")
 
     if submitted:
-        if not (title.strip() or description.strip()):
-            st.warning("Please provide a problem title and/or description.")
+        code = reference_code.strip()
+        if not code:
+            st.warning("Please paste a solution to search with.")
             st.stop()
 
-        query_text = build_query_text(title.strip(), description.strip(), reference_code.strip())
-        where = build_where_filter(difficulty, selected_tags)
+        where = build_where_filter(selected_tags, match_mode)
 
         try:
-            with st.spinner(f"Retrieving the {N_RESULTS} closest problems from Chroma Cloud..."):
-                results = retrieve(collection, query_text, where)
+            with st.spinner(f"Retrieving the {N_RESULTS} closest solutions from Chroma Cloud..."):
+                results = retrieve(collection, embedding_function, code, where)
         except TRANSIENT_ERRORS as exc:
             st.error(f"Lost connection to Chroma Cloud during the search: `{exc}`. Please try again.")
             st.stop()
@@ -333,7 +308,7 @@ def main() -> None:
 
         if not results:
             st.session_state.pop("results", None)
-            st.info("No problems matched. Try relaxing the sidebar filters.")
+            st.info("No solutions matched. Try fewer tags or switch to 'Any selected tag'.")
             st.stop()
 
         st.session_state["results"] = {"items": results, "where": where}
@@ -346,7 +321,7 @@ def main() -> None:
     st.divider()
     st.subheader(f"🏆 Top {len(items)} matches")
     if state["where"]:
-        st.caption(f"Metadata filter applied: `{state['where']}`")
+        st.caption(f"Tag filter applied: `{state['where']}`")
 
     st.dataframe(
         [

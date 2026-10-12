@@ -1,22 +1,24 @@
 """
-populate_db.py - Index sample LeetCode-style problems into Chroma Cloud.
+populate_db.py - Index LeetCode-style solutions into Chroma Cloud.
 
 Pipeline:
-    sample_problems.json
-        -> one Chroma record per solution variation (unique string IDs)
-        -> embeddings computed LOCALLY with nomic-ai/nomic-embed-code
+    problems JSON (id, title, difficulty, tags, solution)
+        -> one Chroma record per solution (unique string IDs)
+        -> the solution code is embedded LOCALLY with nomic-ai/nomic-embed-code
         -> vectors + metadata streamed to the Chroma Cloud collection
 
 This module also exposes the reusable building blocks (device discovery,
 Nomic loader, Chroma embedding function, retry helper, tag helpers) that the
-Streamlit frontend (`main.py`) imports, so both sides embed text identically.
+Streamlit frontend (`main.py`) imports, so both sides embed code identically.
 
 Run from anywhere:
-    python populate/populate_db.py
+    python populate/populate_db.py                       # index sample_problems.json
+    python populate/populate_db.py --file my.json --reset  # wipe and index your own file
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import os
@@ -380,12 +382,8 @@ def normalize_tags(raw_tags: Any) -> List[str]:
 
 
 def build_document_text(problem: Dict[str, Any]) -> str:
-    """Text that gets embedded for a record: problem statement plus its code."""
-    return (
-        f"Title: {problem['title']}\n\n"
-        f"Description: {problem['description']}\n\n"
-        f"Solution:\n{problem['solution']}"
-    )
+    """Text that gets embedded for a record: the solution code only."""
+    return problem["solution"]
 
 
 def build_metadata(problem: Dict[str, Any], solution_index: int) -> Dict[str, Any]:
@@ -400,7 +398,6 @@ def build_metadata(problem: Dict[str, Any], solution_index: int) -> Dict[str, An
     metadata: Dict[str, Any] = {
         "id": int(problem["id"]),
         "title": str(problem["title"]),
-        "description": str(problem["description"]),
         "difficulty": str(problem["difficulty"]),
         "tags": ", ".join(tags),
         "solution": str(problem["solution"]),
@@ -418,7 +415,6 @@ def build_metadata(problem: Dict[str, Any], solution_index: int) -> Dict[str, An
 REQUIRED_FIELDS: Dict[str, type] = {
     "id": int,
     "title": str,
-    "description": str,
     "difficulty": str,
     "tags": list,
     "solution": str,
@@ -468,13 +464,12 @@ def build_records(
         solution_index = solution_counters[problem_id]
 
         metadata = build_metadata(problem, solution_index)
-        for key in ("solution", "description"):
-            size = len(metadata[key].encode("utf-8"))
-            if size > METADATA_VALUE_SOFT_LIMIT_BYTES:
-                logger.warning(
-                    "Problem %s solution %d: metadata '%s' is %d bytes and may exceed "
-                    "Chroma Cloud limits.", problem_id, solution_index, key, size,
-                )
+        size = len(metadata["solution"].encode("utf-8"))
+        if size > METADATA_VALUE_SOFT_LIMIT_BYTES:
+            logger.warning(
+                "Problem %s solution %d: solution is %d bytes and may exceed "
+                "Chroma Cloud metadata limits.", problem_id, solution_index, size,
+            )
 
         ids.append(f"problem-{problem_id}-sol-{solution_index}")
         documents.append(build_document_text(problem))
@@ -501,12 +496,13 @@ def get_collection(
     )
 
 
-def populate() -> int:
-    """Index every solution in sample_problems.json. Returns records written."""
+def populate(path: Path = SAMPLE_PROBLEMS_PATH, reset: bool = False) -> int:
+    """Index every solution in the problems file. Returns records written."""
     logger.info("Loading environment from %s", ENV_PATH)
     settings = load_chroma_settings()
 
-    problems = load_problems()
+    logger.info("Reading problems from %s", path)
+    problems = load_problems(path)
     ids, documents, metadatas = build_records(problems)
     distinct_problems = len({meta["id"] for meta in metadatas})
     logger.info(
@@ -521,6 +517,15 @@ def populate() -> int:
         "Connected to Chroma Cloud (tenant='%s', database='%s').",
         settings["tenant"], settings["database"],
     )
+
+    if reset:
+        existing = with_retries(client.list_collections, action="Listing collections")
+        if any(getattr(c, "name", c) == COLLECTION_NAME for c in existing):
+            with_retries(
+                lambda: client.delete_collection(COLLECTION_NAME),
+                action=f"Deleting collection '{COLLECTION_NAME}'",
+            )
+            logger.info("Deleted existing collection '%s'.", COLLECTION_NAME)
 
     collection = get_collection(client, embedding_function)
     starting_count = with_retries(collection.count, action="Counting records")
@@ -555,9 +560,22 @@ def populate() -> int:
     return written
 
 
-def main() -> int:
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0].strip())
+    parser.add_argument(
+        "--file",
+        type=Path,
+        default=SAMPLE_PROBLEMS_PATH,
+        help=f"JSON array of problems to index (default: {SAMPLE_PROBLEMS_PATH.name}).",
+    )
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help=f"Delete the '{COLLECTION_NAME}' collection before indexing.",
+    )
+    args = parser.parse_args(argv)
     try:
-        populate()
+        populate(args.file.resolve(), reset=args.reset)
         return 0
     except TRANSIENT_ERRORS as exc:
         logger.error("Network error talking to Chroma Cloud: %s", exc)
