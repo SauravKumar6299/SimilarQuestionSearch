@@ -231,7 +231,11 @@ def load_nomic_model(
         tokenizer.padding_side = "right"
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
-        model = AutoModel.from_pretrained(model_name, low_cpu_mem_usage=True)
+        # The checkpoint is stored in float32 (~28 GB); casting while loading keeps
+        # peak RAM near the half-precision size (~14 GB) on CUDA/MPS.
+        model = AutoModel.from_pretrained(
+            model_name, dtype=preferred_dtype(device), low_cpu_mem_usage=True
+        )
         model, device = move_model_safely(model, device, label=model_name)
         _NOMIC_CACHE[model_name] = (tokenizer, model, device)
         return tokenizer, model, device
