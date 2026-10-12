@@ -1,0 +1,1232 @@
+[
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table"
+    ],
+    "solution": "def two_sum(nums, target):\n    # Brute force: check every pair. O(N^2) time, O(1) space.\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n    return []"
+  },
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table"
+    ],
+    "solution": "def two_sum(nums, target):\n    # One-pass hash map of value -> index. O(N) time, O(N) space.\n    seen = {}\n    for i, value in enumerate(nums):\n        complement = target - value\n        if complement in seen:\n            return [seen[complement], i]\n        seen[value] = i\n    return []"
+  },
+  {
+    "id": 217,
+    "title": "Contains Duplicate",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Sorting"
+    ],
+    "solution": "def contains_duplicate(nums):\n    # Hash set membership. O(N) time, O(N) space.\n    seen = set()\n    for value in nums:\n        if value in seen:\n            return True\n        seen.add(value)\n    return False"
+  },
+  {
+    "id": 217,
+    "title": "Contains Duplicate",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Sorting"
+    ],
+    "solution": "def contains_duplicate(nums):\n    # Sort, then compare neighbours. O(N log N) time, O(1) extra space.\n    nums = sorted(nums)\n    for i in range(1, len(nums)):\n        if nums[i] == nums[i - 1]:\n            return True\n    return False"
+  },
+  {
+    "id": 242,
+    "title": "Valid Anagram",
+    "difficulty": "Easy",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Sorting"
+    ],
+    "solution": "def is_anagram(s, t):\n    # Character frequency counts. O(N) time, O(alphabet) space.\n    if len(s) != len(t):\n        return False\n    counts = {}\n    for a, b in zip(s, t):\n        counts[a] = counts.get(a, 0) + 1\n        counts[b] = counts.get(b, 0) - 1\n    return all(c == 0 for c in counts.values())"
+  },
+  {
+    "id": 49,
+    "title": "Group Anagrams",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "String",
+      "Sorting"
+    ],
+    "solution": "from collections import defaultdict\n\ndef group_anagrams(strs):\n    # Key each word by its 26-letter count signature. O(N * K) time.\n    groups = defaultdict(list)\n    for word in strs:\n        signature = [0] * 26\n        for ch in word:\n            signature[ord(ch) - ord('a')] += 1\n        groups[tuple(signature)].append(word)\n    return list(groups.values())"
+  },
+  {
+    "id": 347,
+    "title": "Top K Frequent Elements",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Heap (Priority Queue)",
+      "Bucket Sort"
+    ],
+    "solution": "def top_k_frequent(nums, k):\n    # Bucket sort by frequency. O(N) time, O(N) space.\n    counts = {}\n    for value in nums:\n        counts[value] = counts.get(value, 0) + 1\n    buckets = [[] for _ in range(len(nums) + 1)]\n    for value, freq in counts.items():\n        buckets[freq].append(value)\n    result = []\n    for freq in range(len(buckets) - 1, 0, -1):\n        for value in buckets[freq]:\n            result.append(value)\n            if len(result) == k:\n                return result\n    return result"
+  },
+  {
+    "id": 238,
+    "title": "Product of Array Except Self",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Prefix Sum"
+    ],
+    "solution": "def product_except_self(nums):\n    # Prefix products left-to-right, then multiply suffix products right-to-left.\n    n = len(nums)\n    answer = [1] * n\n    prefix = 1\n    for i in range(n):\n        answer[i] = prefix\n        prefix *= nums[i]\n    suffix = 1\n    for i in range(n - 1, -1, -1):\n        answer[i] *= suffix\n        suffix *= nums[i]\n    return answer"
+  },
+  {
+    "id": 36,
+    "title": "Valid Sudoku",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Matrix"
+    ],
+    "solution": "def is_valid_sudoku(board):\n    # One pass, tracking seen digits per row, column, and 3x3 box.\n    rows = [set() for _ in range(9)]\n    cols = [set() for _ in range(9)]\n    boxes = [set() for _ in range(9)]\n    for r in range(9):\n        for c in range(9):\n            digit = board[r][c]\n            if digit == '.':\n                continue\n            box = (r // 3) * 3 + c // 3\n            if digit in rows[r] or digit in cols[c] or digit in boxes[box]:\n                return False\n            rows[r].add(digit)\n            cols[c].add(digit)\n            boxes[box].add(digit)\n    return True"
+  },
+  {
+    "id": 128,
+    "title": "Longest Consecutive Sequence",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Union Find"
+    ],
+    "solution": "def longest_consecutive(nums):\n    # Only start counting from numbers that begin a run. O(N) time.\n    values = set(nums)\n    best = 0\n    for value in values:\n        if value - 1 not in values:\n            length = 1\n            while value + length in values:\n                length += 1\n            best = max(best, length)\n    return best"
+  },
+  {
+    "id": 169,
+    "title": "Majority Element",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Counting"
+    ],
+    "solution": "def majority_element(nums):\n    # Boyer-Moore voting. O(N) time, O(1) space.\n    candidate, count = None, 0\n    for value in nums:\n        if count == 0:\n            candidate = value\n        count += 1 if value == candidate else -1\n    return candidate"
+  },
+  {
+    "id": 41,
+    "title": "First Missing Positive",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Hash Table"
+    ],
+    "solution": "def first_missing_positive(nums):\n    # Cyclic sort: place every value v in [1, n] at index v - 1, then scan.\n    n = len(nums)\n    for i in range(n):\n        while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:\n            target = nums[i] - 1\n            nums[i], nums[target] = nums[target], nums[i]\n    for i in range(n):\n        if nums[i] != i + 1:\n            return i + 1\n    return n + 1"
+  },
+  {
+    "id": 560,
+    "title": "Subarray Sum Equals K",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Prefix Sum"
+    ],
+    "solution": "def subarray_sum(nums, k):\n    # Count prefix sums seen so far; a subarray ending here sums to k if prefix - k was seen.\n    counts = {0: 1}\n    prefix = 0\n    total = 0\n    for value in nums:\n        prefix += value\n        total += counts.get(prefix - k, 0)\n        counts[prefix] = counts.get(prefix, 0) + 1\n    return total"
+  },
+  {
+    "id": 88,
+    "title": "Merge Sorted Array",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Sorting"
+    ],
+    "solution": "def merge(nums1, m, nums2, n):\n    # Fill from the back so nothing in nums1 is overwritten before it is read.\n    i, j, write = m - 1, n - 1, m + n - 1\n    while j >= 0:\n        if i >= 0 and nums1[i] > nums2[j]:\n            nums1[write] = nums1[i]\n            i -= 1\n        else:\n            nums1[write] = nums2[j]\n            j -= 1\n        write -= 1"
+  },
+  {
+    "id": 189,
+    "title": "Rotate Array",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Math",
+      "Two Pointers"
+    ],
+    "solution": "def rotate(nums, k):\n    # Three reversals: whole array, first k, remainder. O(N) time, O(1) space.\n    n = len(nums)\n    k %= n\n\n    def reverse(lo, hi):\n        while lo < hi:\n            nums[lo], nums[hi] = nums[hi], nums[lo]\n            lo += 1\n            hi -= 1\n\n    reverse(0, n - 1)\n    reverse(0, k - 1)\n    reverse(k, n - 1)"
+  },
+  {
+    "id": 54,
+    "title": "Spiral Matrix",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Matrix",
+      "Simulation"
+    ],
+    "solution": "def spiral_order(matrix):\n    # Peel the outer layer by shrinking four boundaries.\n    result = []\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n    while top <= bottom and left <= right:\n        for c in range(left, right + 1):\n            result.append(matrix[top][c])\n        top += 1\n        for r in range(top, bottom + 1):\n            result.append(matrix[r][right])\n        right -= 1\n        if top <= bottom:\n            for c in range(right, left - 1, -1):\n                result.append(matrix[bottom][c])\n            bottom -= 1\n        if left <= right:\n            for r in range(bottom, top - 1, -1):\n                result.append(matrix[r][left])\n            left += 1\n    return result"
+  },
+  {
+    "id": 48,
+    "title": "Rotate Image",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Math",
+      "Matrix"
+    ],
+    "solution": "def rotate_image(matrix):\n    # Transpose, then reverse each row.\n    n = len(matrix)\n    for i in range(n):\n        for j in range(i + 1, n):\n            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]\n    for row in matrix:\n        row.reverse()"
+  },
+  {
+    "id": 125,
+    "title": "Valid Palindrome",
+    "difficulty": "Easy",
+    "tags": [
+      "Two Pointers",
+      "String"
+    ],
+    "solution": "def is_palindrome(s):\n    # Two pointers skipping non-alphanumeric characters.\n    left, right = 0, len(s) - 1\n    while left < right:\n        while left < right and not s[left].isalnum():\n            left += 1\n        while left < right and not s[right].isalnum():\n            right -= 1\n        if s[left].lower() != s[right].lower():\n            return False\n        left += 1\n        right -= 1\n    return True"
+  },
+  {
+    "id": 167,
+    "title": "Two Sum II - Input Array Is Sorted",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Binary Search"
+    ],
+    "solution": "def two_sum_sorted(numbers, target):\n    # Two pointers converging from both ends. O(N) time, O(1) space.\n    left, right = 0, len(numbers) - 1\n    while left < right:\n        current = numbers[left] + numbers[right]\n        if current == target:\n            return [left + 1, right + 1]\n        if current < target:\n            left += 1\n        else:\n            right -= 1\n    return []"
+  },
+  {
+    "id": 15,
+    "title": "3Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Sorting"
+    ],
+    "solution": "def three_sum(nums):\n    # Sort, fix one element, then two-pointer the rest while skipping duplicates.\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n            if total < 0:\n                left += 1\n            elif total > 0:\n                right -= 1\n            else:\n                result.append([nums[i], nums[left], nums[right]])\n                left += 1\n                right -= 1\n                while left < right and nums[left] == nums[left - 1]:\n                    left += 1\n    return result"
+  },
+  {
+    "id": 11,
+    "title": "Container With Most Water",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Greedy"
+    ],
+    "solution": "def max_area(height):\n    # Move the shorter wall inward; it is the only way to possibly grow the area.\n    left, right = 0, len(height) - 1\n    best = 0\n    while left < right:\n        best = max(best, (right - left) * min(height[left], height[right]))\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return best"
+  },
+  {
+    "id": 42,
+    "title": "Trapping Rain Water",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Dynamic Programming",
+      "Stack"
+    ],
+    "solution": "def trap(height):\n    # Prefix/suffix maxima arrays. O(N) time, O(N) space.\n    n = len(height)\n    if n == 0:\n        return 0\n    left_max = [0] * n\n    right_max = [0] * n\n    left_max[0] = height[0]\n    for i in range(1, n):\n        left_max[i] = max(left_max[i - 1], height[i])\n    right_max[n - 1] = height[n - 1]\n    for i in range(n - 2, -1, -1):\n        right_max[i] = max(right_max[i + 1], height[i])\n    water = 0\n    for i in range(n):\n        water += min(left_max[i], right_max[i]) - height[i]\n    return water"
+  },
+  {
+    "id": 42,
+    "title": "Trapping Rain Water",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Dynamic Programming",
+      "Stack"
+    ],
+    "solution": "def trap(height):\n    # Two pointers tracking running maxima from each side. O(N) time, O(1) space.\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            left_max = max(left_max, height[left])\n            water += left_max - height[left]\n            left += 1\n        else:\n            right_max = max(right_max, height[right])\n            water += right_max - height[right]\n            right -= 1\n    return water"
+  },
+  {
+    "id": 283,
+    "title": "Move Zeroes",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Two Pointers"
+    ],
+    "solution": "def move_zeroes(nums):\n    # Swap each non-zero element forward to the next write slot.\n    write = 0\n    for read in range(len(nums)):\n        if nums[read] != 0:\n            nums[write], nums[read] = nums[read], nums[write]\n            write += 1"
+  },
+  {
+    "id": 75,
+    "title": "Sort Colors",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Two Pointers",
+      "Sorting"
+    ],
+    "solution": "def sort_colors(nums):\n    # Dutch national flag partitioning in a single pass.\n    low, mid, high = 0, 0, len(nums) - 1\n    while mid <= high:\n        if nums[mid] == 0:\n            nums[low], nums[mid] = nums[mid], nums[low]\n            low += 1\n            mid += 1\n        elif nums[mid] == 1:\n            mid += 1\n        else:\n            nums[mid], nums[high] = nums[high], nums[mid]\n            high -= 1"
+  },
+  {
+    "id": 121,
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Dynamic Programming",
+      "Sliding Window"
+    ],
+    "solution": "def max_profit(prices):\n    # Track the cheapest price so far and the best sale against it.\n    lowest = float('inf')\n    best = 0\n    for price in prices:\n        lowest = min(lowest, price)\n        best = max(best, price - lowest)\n    return best"
+  },
+  {
+    "id": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Sliding Window"
+    ],
+    "solution": "def length_of_longest_substring(s):\n    # Sliding window with last-seen index map. O(N) time.\n    last_seen = {}\n    left = 0\n    best = 0\n    for right, ch in enumerate(s):\n        if ch in last_seen and last_seen[ch] >= left:\n            left = last_seen[ch] + 1\n        last_seen[ch] = right\n        best = max(best, right - left + 1)\n    return best"
+  },
+  {
+    "id": 424,
+    "title": "Longest Repeating Character Replacement",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Sliding Window"
+    ],
+    "solution": "def character_replacement(s, k):\n    # Window is valid while (window length - most frequent count) <= k.\n    counts = {}\n    left = 0\n    max_freq = 0\n    best = 0\n    for right, ch in enumerate(s):\n        counts[ch] = counts.get(ch, 0) + 1\n        max_freq = max(max_freq, counts[ch])\n        while (right - left + 1) - max_freq > k:\n            counts[s[left]] -= 1\n            left += 1\n        best = max(best, right - left + 1)\n    return best"
+  },
+  {
+    "id": 567,
+    "title": "Permutation in String",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "Two Pointers",
+      "String",
+      "Sliding Window"
+    ],
+    "solution": "def check_inclusion(s1, s2):\n    # Fixed-size window comparing letter counts.\n    if len(s1) > len(s2):\n        return False\n    need = [0] * 26\n    window = [0] * 26\n    for ch in s1:\n        need[ord(ch) - 97] += 1\n    for i, ch in enumerate(s2):\n        window[ord(ch) - 97] += 1\n        if i >= len(s1):\n            window[ord(s2[i - len(s1)]) - 97] -= 1\n        if window == need:\n            return True\n    return False"
+  },
+  {
+    "id": 76,
+    "title": "Minimum Window Substring",
+    "difficulty": "Hard",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Sliding Window"
+    ],
+    "solution": "from collections import Counter\n\ndef min_window(s, t):\n    # Expand right until all needed chars are covered, then shrink from the left.\n    need = Counter(t)\n    missing = len(t)\n    left = 0\n    best_start, best_len = 0, float('inf')\n    for right, ch in enumerate(s):\n        if need[ch] > 0:\n            missing -= 1\n        need[ch] -= 1\n        while missing == 0:\n            if right - left + 1 < best_len:\n                best_start, best_len = left, right - left + 1\n            need[s[left]] += 1\n            if need[s[left]] > 0:\n                missing += 1\n            left += 1\n    return \"\" if best_len == float('inf') else s[best_start:best_start + best_len]"
+  },
+  {
+    "id": 239,
+    "title": "Sliding Window Maximum",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Queue",
+      "Sliding Window",
+      "Monotonic Queue"
+    ],
+    "solution": "from collections import deque\n\ndef max_sliding_window(nums, k):\n    # Monotonic decreasing deque of indices; the front is always the window max.\n    window = deque()\n    result = []\n    for i, value in enumerate(nums):\n        while window and nums[window[-1]] <= value:\n            window.pop()\n        window.append(i)\n        if window[0] <= i - k:\n            window.popleft()\n        if i >= k - 1:\n            result.append(nums[window[0]])\n    return result"
+  },
+  {
+    "id": 209,
+    "title": "Minimum Size Subarray Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search",
+      "Sliding Window",
+      "Prefix Sum"
+    ],
+    "solution": "def min_sub_array_len(target, nums):\n    # Variable-size window over positive numbers.\n    left = 0\n    total = 0\n    best = float('inf')\n    for right, value in enumerate(nums):\n        total += value\n        while total >= target:\n            best = min(best, right - left + 1)\n            total -= nums[left]\n            left += 1\n    return 0 if best == float('inf') else best"
+  },
+  {
+    "id": 20,
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "tags": [
+      "String",
+      "Stack"
+    ],
+    "solution": "def is_valid(s):\n    # Stack of open brackets. O(N) time, O(N) space.\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for ch in s:\n        if ch in pairs:\n            if not stack or stack[-1] != pairs[ch]:\n                return False\n            stack.pop()\n        else:\n            stack.append(ch)\n    return not stack"
+  },
+  {
+    "id": 155,
+    "title": "Min Stack",
+    "difficulty": "Medium",
+    "tags": [
+      "Stack",
+      "Design"
+    ],
+    "solution": "class MinStack:\n    # Each entry stores (value, minimum of the stack at that depth).\n    def __init__(self):\n        self.stack = []\n\n    def push(self, val):\n        current_min = min(val, self.stack[-1][1]) if self.stack else val\n        self.stack.append((val, current_min))\n\n    def pop(self):\n        self.stack.pop()\n\n    def top(self):\n        return self.stack[-1][0]\n\n    def get_min(self):\n        return self.stack[-1][1]"
+  },
+  {
+    "id": 150,
+    "title": "Evaluate Reverse Polish Notation",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Math",
+      "Stack"
+    ],
+    "solution": "def eval_rpn(tokens):\n    # Push operands; apply each operator to the top two values.\n    stack = []\n    for token in tokens:\n        if token in ('+', '-', '*', '/'):\n            b = stack.pop()\n            a = stack.pop()\n            if token == '+':\n                stack.append(a + b)\n            elif token == '-':\n                stack.append(a - b)\n            elif token == '*':\n                stack.append(a * b)\n            else:\n                stack.append(int(a / b))\n        else:\n            stack.append(int(token))\n    return stack[0]"
+  },
+  {
+    "id": 22,
+    "title": "Generate Parentheses",
+    "difficulty": "Medium",
+    "tags": [
+      "String",
+      "Dynamic Programming",
+      "Backtracking"
+    ],
+    "solution": "def generate_parenthesis(n):\n    # Backtrack, adding '(' while any remain and ')' while it keeps the prefix valid.\n    result = []\n\n    def backtrack(current, open_count, close_count):\n        if len(current) == 2 * n:\n            result.append(current)\n            return\n        if open_count < n:\n            backtrack(current + '(', open_count + 1, close_count)\n        if close_count < open_count:\n            backtrack(current + ')', open_count, close_count + 1)\n\n    backtrack('', 0, 0)\n    return result"
+  },
+  {
+    "id": 739,
+    "title": "Daily Temperatures",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Stack",
+      "Monotonic Stack"
+    ],
+    "solution": "def daily_temperatures(temperatures):\n    # Monotonic decreasing stack of indices still waiting for a warmer day.\n    answer = [0] * len(temperatures)\n    stack = []\n    for i, temp in enumerate(temperatures):\n        while stack and temperatures[stack[-1]] < temp:\n            prev = stack.pop()\n            answer[prev] = i - prev\n        stack.append(i)\n    return answer"
+  },
+  {
+    "id": 853,
+    "title": "Car Fleet",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Stack",
+      "Sorting",
+      "Monotonic Stack"
+    ],
+    "solution": "def car_fleet(target, position, speed):\n    # Process cars from closest to the target; a slower arrival time starts a new fleet.\n    cars = sorted(zip(position, speed), reverse=True)\n    fleets = 0\n    slowest = 0.0\n    for pos, spd in cars:\n        arrival = (target - pos) / spd\n        if arrival > slowest:\n            fleets += 1\n            slowest = arrival\n    return fleets"
+  },
+  {
+    "id": 84,
+    "title": "Largest Rectangle in Histogram",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Stack",
+      "Monotonic Stack"
+    ],
+    "solution": "def largest_rectangle_area(heights):\n    # Monotonic increasing stack; popping a bar fixes its maximal width.\n    stack = []\n    best = 0\n    for i, h in enumerate(heights + [0]):\n        start = i\n        while stack and stack[-1][1] > h:\n            index, height = stack.pop()\n            best = max(best, height * (i - index))\n            start = index\n        stack.append((start, h))\n    return best"
+  },
+  {
+    "id": 704,
+    "title": "Binary Search",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Binary Search"
+    ],
+    "solution": "def search(nums, target):\n    # Classic closed-interval binary search.\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1"
+  },
+  {
+    "id": 74,
+    "title": "Search a 2D Matrix",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search",
+      "Matrix"
+    ],
+    "solution": "def search_matrix(matrix, target):\n    # Treat the matrix as one flattened sorted array.\n    rows, cols = len(matrix), len(matrix[0])\n    lo, hi = 0, rows * cols - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        value = matrix[mid // cols][mid % cols]\n        if value == target:\n            return True\n        if value < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return False"
+  },
+  {
+    "id": 875,
+    "title": "Koko Eating Bananas",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search"
+    ],
+    "solution": "def min_eating_speed(piles, h):\n    # Binary search on the answer: the smallest speed whose total hours fit in h.\n    lo, hi = 1, max(piles)\n    while lo < hi:\n        speed = (lo + hi) // 2\n        hours = sum((pile + speed - 1) // speed for pile in piles)\n        if hours <= h:\n            hi = speed\n        else:\n            lo = speed + 1\n    return lo"
+  },
+  {
+    "id": 153,
+    "title": "Find Minimum in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search"
+    ],
+    "solution": "def find_min(nums):\n    # Compare mid with the right end to know which half holds the rotation point.\n    lo, hi = 0, len(nums) - 1\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if nums[mid] > nums[hi]:\n            lo = mid + 1\n        else:\n            hi = mid\n    return nums[lo]"
+  },
+  {
+    "id": 33,
+    "title": "Search in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search"
+    ],
+    "solution": "def search_rotated(nums, target):\n    # One half around mid is always sorted; check whether target lies in it.\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[lo] <= nums[mid]:\n            if nums[lo] <= target < nums[mid]:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n        else:\n            if nums[mid] < target <= nums[hi]:\n                lo = mid + 1\n            else:\n                hi = mid - 1\n    return -1"
+  },
+  {
+    "id": 981,
+    "title": "Time Based Key-Value Store",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Binary Search",
+      "Design"
+    ],
+    "solution": "import bisect\n\nclass TimeMap:\n    # Per-key lists of timestamps/values kept in insertion (= sorted) order.\n    def __init__(self):\n        self.times = {}\n        self.values = {}\n\n    def set(self, key, value, timestamp):\n        self.times.setdefault(key, []).append(timestamp)\n        self.values.setdefault(key, []).append(value)\n\n    def get(self, key, timestamp):\n        times = self.times.get(key, [])\n        index = bisect.bisect_right(times, timestamp) - 1\n        return self.values[key][index] if index >= 0 else \"\""
+  },
+  {
+    "id": 4,
+    "title": "Median of Two Sorted Arrays",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Binary Search",
+      "Divide and Conquer"
+    ],
+    "solution": "def find_median_sorted_arrays(nums1, nums2):\n    # Binary search a partition of the shorter array so both left halves are <= both right halves.\n    if len(nums1) > len(nums2):\n        nums1, nums2 = nums2, nums1\n    m, n = len(nums1), len(nums2)\n    half = (m + n + 1) // 2\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = half - i\n        left1 = nums1[i - 1] if i > 0 else float('-inf')\n        right1 = nums1[i] if i < m else float('inf')\n        left2 = nums2[j - 1] if j > 0 else float('-inf')\n        right2 = nums2[j] if j < n else float('inf')\n        if left1 <= right2 and left2 <= right1:\n            if (m + n) % 2:\n                return float(max(left1, left2))\n            return (max(left1, left2) + min(right1, right2)) / 2\n        if left1 > right2:\n            hi = i - 1\n        else:\n            lo = i + 1\n    raise ValueError(\"input arrays are not sorted\")"
+  },
+  {
+    "id": 35,
+    "title": "Search Insert Position",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Binary Search"
+    ],
+    "solution": "def search_insert(nums, target):\n    # Lower-bound binary search: first index with nums[i] >= target.\n    lo, hi = 0, len(nums)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if nums[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo"
+  },
+  {
+    "id": 56,
+    "title": "Merge Intervals",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Sorting"
+    ],
+    "solution": "def merge_intervals(intervals):\n    # Sort by start, then extend the last merged interval while they overlap.\n    intervals.sort(key=lambda interval: interval[0])\n    merged = []\n    for start, end in intervals:\n        if merged and start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged"
+  },
+  {
+    "id": 57,
+    "title": "Insert Interval",
+    "difficulty": "Medium",
+    "tags": [
+      "Array"
+    ],
+    "solution": "def insert_interval(intervals, new_interval):\n    # Copy intervals before, merge the overlapping ones, then copy the rest.\n    result = []\n    i, n = 0, len(intervals)\n    start, end = new_interval\n    while i < n and intervals[i][1] < start:\n        result.append(intervals[i])\n        i += 1\n    while i < n and intervals[i][0] <= end:\n        start = min(start, intervals[i][0])\n        end = max(end, intervals[i][1])\n        i += 1\n    result.append([start, end])\n    result.extend(intervals[i:])\n    return result"
+  },
+  {
+    "id": 435,
+    "title": "Non-overlapping Intervals",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Dynamic Programming",
+      "Greedy",
+      "Sorting"
+    ],
+    "solution": "def erase_overlap_intervals(intervals):\n    # Greedy: keep the interval that ends earliest, drop anything overlapping it.\n    intervals.sort(key=lambda interval: interval[1])\n    removed = 0\n    prev_end = float('-inf')\n    for start, end in intervals:\n        if start >= prev_end:\n            prev_end = end\n        else:\n            removed += 1\n    return removed"
+  },
+  {
+    "id": 206,
+    "title": "Reverse Linked List",
+    "difficulty": "Easy",
+    "tags": [
+      "Linked List",
+      "Recursion"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef reverse_list(head):\n    # Iteratively re-point each node at its predecessor. O(N) time, O(1) space.\n    prev = None\n    while head:\n        nxt = head.next\n        head.next = prev\n        prev = head\n        head = nxt\n    return prev"
+  },
+  {
+    "id": 206,
+    "title": "Reverse Linked List",
+    "difficulty": "Easy",
+    "tags": [
+      "Linked List",
+      "Recursion"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef reverse_list(head):\n    # Recursive: reverse the tail, then hook the current node onto its end. O(N) stack.\n    if head is None or head.next is None:\n        return head\n    new_head = reverse_list(head.next)\n    head.next.next = head\n    head.next = None\n    return new_head"
+  },
+  {
+    "id": 21,
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "Easy",
+    "tags": [
+      "Linked List",
+      "Recursion"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef merge_two_lists(list1, list2):\n    # Splice the smaller head onto a dummy tail until one list runs out.\n    dummy = tail = ListNode()\n    while list1 and list2:\n        if list1.val <= list2.val:\n            tail.next, list1 = list1, list1.next\n        else:\n            tail.next, list2 = list2, list2.next\n        tail = tail.next\n    tail.next = list1 or list2\n    return dummy.next"
+  },
+  {
+    "id": 143,
+    "title": "Reorder List",
+    "difficulty": "Medium",
+    "tags": [
+      "Linked List",
+      "Two Pointers",
+      "Stack",
+      "Recursion"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef reorder_list(head):\n    # Find the middle, reverse the second half, then interleave the halves.\n    if not head:\n        return\n    slow, fast = head, head\n    while fast.next and fast.next.next:\n        slow = slow.next\n        fast = fast.next.next\n    second = slow.next\n    slow.next = None\n    prev = None\n    while second:\n        nxt = second.next\n        second.next = prev\n        prev = second\n        second = nxt\n    first, second = head, prev\n    while second:\n        first_next, second_next = first.next, second.next\n        first.next = second\n        second.next = first_next\n        first, second = first_next, second_next"
+  },
+  {
+    "id": 19,
+    "title": "Remove Nth Node From End of List",
+    "difficulty": "Medium",
+    "tags": [
+      "Linked List",
+      "Two Pointers"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef remove_nth_from_end(head, n):\n    # Lead pointer n steps ahead; when it hits the end, trail sits before the target.\n    dummy = ListNode(0, head)\n    lead = trail = dummy\n    for _ in range(n + 1):\n        lead = lead.next\n    while lead:\n        lead = lead.next\n        trail = trail.next\n    trail.next = trail.next.next\n    return dummy.next"
+  },
+  {
+    "id": 141,
+    "title": "Linked List Cycle",
+    "difficulty": "Easy",
+    "tags": [
+      "Hash Table",
+      "Linked List",
+      "Two Pointers"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef has_cycle(head):\n    # Floyd's tortoise and hare: the fast pointer laps the slow one inside a cycle.\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            return True\n    return False"
+  },
+  {
+    "id": 2,
+    "title": "Add Two Numbers",
+    "difficulty": "Medium",
+    "tags": [
+      "Linked List",
+      "Math",
+      "Recursion"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\n\ndef add_two_numbers(l1, l2):\n    # Grade-school addition digit by digit, carrying into the next node.\n    dummy = tail = ListNode()\n    carry = 0\n    while l1 or l2 or carry:\n        total = carry\n        if l1:\n            total += l1.val\n            l1 = l1.next\n        if l2:\n            total += l2.val\n            l2 = l2.next\n        carry, digit = divmod(total, 10)\n        tail.next = ListNode(digit)\n        tail = tail.next\n    return dummy.next"
+  },
+  {
+    "id": 23,
+    "title": "Merge k Sorted Lists",
+    "difficulty": "Hard",
+    "tags": [
+      "Linked List",
+      "Divide and Conquer",
+      "Heap (Priority Queue)",
+      "Merge Sort"
+    ],
+    "solution": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\nimport heapq\n\ndef merge_k_lists(lists):\n    # Min-heap of current heads; the index breaks ties so nodes are never compared.\n    heap = [(node.val, i, node) for i, node in enumerate(lists) if node]\n    heapq.heapify(heap)\n    dummy = tail = ListNode()\n    while heap:\n        _, i, node = heapq.heappop(heap)\n        tail.next = node\n        tail = node\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))\n    return dummy.next"
+  },
+  {
+    "id": 146,
+    "title": "LRU Cache",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "Linked List",
+      "Design",
+      "Doubly-Linked List"
+    ],
+    "solution": "class Node:\n    def __init__(self, key=0, val=0):\n        self.key, self.val = key, val\n        self.prev = self.next = None\n\n\nclass LRUCache:\n    # Hash map to nodes + doubly linked list ordered from least to most recent.\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.nodes = {}\n        self.head, self.tail = Node(), Node()\n        self.head.next, self.tail.prev = self.tail, self.head\n\n    def _remove(self, node):\n        node.prev.next, node.next.prev = node.next, node.prev\n\n    def _append(self, node):\n        node.prev, node.next = self.tail.prev, self.tail\n        self.tail.prev.next = node\n        self.tail.prev = node\n\n    def get(self, key):\n        if key not in self.nodes:\n            return -1\n        node = self.nodes[key]\n        self._remove(node)\n        self._append(node)\n        return node.val\n\n    def put(self, key, value):\n        if key in self.nodes:\n            self._remove(self.nodes[key])\n        node = Node(key, value)\n        self.nodes[key] = node\n        self._append(node)\n        if len(self.nodes) > self.capacity:\n            oldest = self.head.next\n            self._remove(oldest)\n            del self.nodes[oldest.key]"
+  },
+  {
+    "id": 226,
+    "title": "Invert Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef invert_tree(root):\n    # Swap children recursively.\n    if root:\n        root.left, root.right = invert_tree(root.right), invert_tree(root.left)\n    return root"
+  },
+  {
+    "id": 104,
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef max_depth(root):\n    # Depth is one more than the deeper subtree.\n    if not root:\n        return 0\n    return 1 + max(max_depth(root.left), max_depth(root.right))"
+  },
+  {
+    "id": 543,
+    "title": "Diameter of Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef diameter_of_binary_tree(root):\n    # Post-order heights; the best path through a node is left height + right height.\n    best = 0\n\n    def height(node):\n        nonlocal best\n        if not node:\n            return 0\n        left, right = height(node.left), height(node.right)\n        best = max(best, left + right)\n        return 1 + max(left, right)\n\n    height(root)\n    return best"
+  },
+  {
+    "id": 110,
+    "title": "Balanced Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef is_balanced(root):\n    # Return -1 as soon as any subtree is unbalanced, otherwise its height.\n    def height(node):\n        if not node:\n            return 0\n        left = height(node.left)\n        if left < 0:\n            return -1\n        right = height(node.right)\n        if right < 0 or abs(left - right) > 1:\n            return -1\n        return 1 + max(left, right)\n\n    return height(root) >= 0"
+  },
+  {
+    "id": 100,
+    "title": "Same Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef is_same_tree(p, q):\n    # Both empty, or equal values with identical subtrees.\n    if not p or not q:\n        return p is q\n    return p.val == q.val and is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)"
+  },
+  {
+    "id": 235,
+    "title": "Lowest Common Ancestor of a Binary Search Tree",
+    "difficulty": "Medium",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Search Tree",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef lowest_common_ancestor(root, p, q):\n    # Walk down until p and q fall on different sides (or one equals the current node).\n    node = root\n    while node:\n        if p.val < node.val and q.val < node.val:\n            node = node.left\n        elif p.val > node.val and q.val > node.val:\n            node = node.right\n        else:\n            return node\n    return None"
+  },
+  {
+    "id": 102,
+    "title": "Binary Tree Level Order Traversal",
+    "difficulty": "Medium",
+    "tags": [
+      "Tree",
+      "Breadth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\nfrom collections import deque\n\ndef level_order(root):\n    # BFS one level at a time.\n    if not root:\n        return []\n    result = []\n    queue = deque([root])\n    while queue:\n        level = []\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            level.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n        result.append(level)\n    return result"
+  },
+  {
+    "id": 199,
+    "title": "Binary Tree Right Side View",
+    "difficulty": "Medium",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef right_side_view(root):\n    # DFS visiting right children first; the first node seen at each depth is visible.\n    view = []\n\n    def dfs(node, depth):\n        if not node:\n            return\n        if depth == len(view):\n            view.append(node.val)\n        dfs(node.right, depth + 1)\n        dfs(node.left, depth + 1)\n\n    dfs(root, 0)\n    return view"
+  },
+  {
+    "id": 98,
+    "title": "Validate Binary Search Tree",
+    "difficulty": "Medium",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Search Tree",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef is_valid_bst(root):\n    # Pass down the open interval each subtree's values must fall in.\n    def valid(node, low, high):\n        if not node:\n            return True\n        if not (low < node.val < high):\n            return False\n        return valid(node.left, low, node.val) and valid(node.right, node.val, high)\n\n    return valid(root, float('-inf'), float('inf'))"
+  },
+  {
+    "id": 230,
+    "title": "Kth Smallest Element in a BST",
+    "difficulty": "Medium",
+    "tags": [
+      "Tree",
+      "Depth-First Search",
+      "Binary Search Tree",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef kth_smallest(root, k):\n    # Iterative in-order traversal visits values in sorted order.\n    stack = []\n    node = root\n    while stack or node:\n        while node:\n            stack.append(node)\n            node = node.left\n        node = stack.pop()\n        k -= 1\n        if k == 0:\n            return node.val\n        node = node.right\n    return None"
+  },
+  {
+    "id": 105,
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Divide and Conquer",
+      "Tree",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef build_tree_from_traversals(preorder, inorder):\n    # The next preorder value is the root; its inorder index splits left and right subtrees.\n    index_of = {value: i for i, value in enumerate(inorder)}\n    next_root = 0\n\n    def build(lo, hi):\n        nonlocal next_root\n        if lo > hi:\n            return None\n        value = preorder[next_root]\n        next_root += 1\n        node = TreeNode(value)\n        mid = index_of[value]\n        node.left = build(lo, mid - 1)\n        node.right = build(mid + 1, hi)\n        return node\n\n    return build(0, len(inorder) - 1)"
+  },
+  {
+    "id": 124,
+    "title": "Binary Tree Maximum Path Sum",
+    "difficulty": "Hard",
+    "tags": [
+      "Dynamic Programming",
+      "Tree",
+      "Depth-First Search",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\ndef max_path_sum(root):\n    # Each node returns its best downward gain; the best path may bend through it.\n    best = float('-inf')\n\n    def gain(node):\n        nonlocal best\n        if not node:\n            return 0\n        left = max(gain(node.left), 0)\n        right = max(gain(node.right), 0)\n        best = max(best, node.val + left + right)\n        return node.val + max(left, right)\n\n    gain(root)\n    return best"
+  },
+  {
+    "id": 297,
+    "title": "Serialize and Deserialize Binary Tree",
+    "difficulty": "Hard",
+    "tags": [
+      "String",
+      "Tree",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Design",
+      "Binary Tree"
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\nclass Codec:\n    # Preorder traversal with '#' marking empty children.\n    def serialize(self, root):\n        parts = []\n\n        def dfs(node):\n            if not node:\n                parts.append('#')\n                return\n            parts.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n\n        dfs(root)\n        return ','.join(parts)\n\n    def deserialize(self, data):\n        tokens = iter(data.split(','))\n\n        def build():\n            token = next(tokens)\n            if token == '#':\n                return None\n            node = TreeNode(int(token))\n            node.left = build()\n            node.right = build()\n            return node\n\n        return build()"
+  },
+  {
+    "id": 703,
+    "title": "Kth Largest Element in a Stream",
+    "difficulty": "Easy",
+    "tags": [
+      "Tree",
+      "Design",
+      "Binary Search Tree",
+      "Heap (Priority Queue)",
+      "Data Stream"
+    ],
+    "solution": "import heapq\n\nclass KthLargest:\n    # Min-heap holding the k largest values; its root is the kth largest.\n    def __init__(self, k, nums):\n        self.k = k\n        self.heap = []\n        for value in nums:\n            self.add(value)\n\n    def add(self, val):\n        heapq.heappush(self.heap, val)\n        if len(self.heap) > self.k:\n            heapq.heappop(self.heap)\n        return self.heap[0]"
+  },
+  {
+    "id": 1046,
+    "title": "Last Stone Weight",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Heap (Priority Queue)"
+    ],
+    "solution": "import heapq\n\ndef last_stone_weight(stones):\n    # Max-heap via negated weights.\n    heap = [-stone for stone in stones]\n    heapq.heapify(heap)\n    while len(heap) > 1:\n        y = -heapq.heappop(heap)\n        x = -heapq.heappop(heap)\n        if y != x:\n            heapq.heappush(heap, -(y - x))\n    return -heap[0] if heap else 0"
+  },
+  {
+    "id": 973,
+    "title": "K Closest Points to Origin",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Math",
+      "Divide and Conquer",
+      "Geometry",
+      "Sorting",
+      "Heap (Priority Queue)"
+    ],
+    "solution": "import heapq\n\ndef k_closest(points, k):\n    # Max-heap of size k on squared distance. O(N log k) time.\n    heap = []\n    for x, y in points:\n        heapq.heappush(heap, (-(x * x + y * y), x, y))\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return [[x, y] for _, x, y in heap]"
+  },
+  {
+    "id": 215,
+    "title": "Kth Largest Element in an Array",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Divide and Conquer",
+      "Sorting",
+      "Heap (Priority Queue)",
+      "Quickselect"
+    ],
+    "solution": "import heapq\n\ndef find_kth_largest(nums, k):\n    # Min-heap of the k largest seen so far. O(N log k) time.\n    heap = []\n    for value in nums:\n        heapq.heappush(heap, value)\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return heap[0]"
+  },
+  {
+    "id": 215,
+    "title": "Kth Largest Element in an Array",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Divide and Conquer",
+      "Sorting",
+      "Heap (Priority Queue)",
+      "Quickselect"
+    ],
+    "solution": "import random\n\ndef find_kth_largest(nums, k):\n    # Quickselect with a random pivot and three-way partition. O(N) average time.\n    target = len(nums) - k\n    lo, hi = 0, len(nums) - 1\n    nums = list(nums)\n    while True:\n        pivot = nums[random.randint(lo, hi)]\n        lt, i, gt = lo, lo, hi\n        while i <= gt:\n            if nums[i] < pivot:\n                nums[lt], nums[i] = nums[i], nums[lt]\n                lt += 1\n                i += 1\n            elif nums[i] > pivot:\n                nums[i], nums[gt] = nums[gt], nums[i]\n                gt -= 1\n            else:\n                i += 1\n        if target < lt:\n            hi = lt - 1\n        elif target > gt:\n            lo = gt + 1\n        else:\n            return pivot"
+  },
+  {
+    "id": 295,
+    "title": "Find Median from Data Stream",
+    "difficulty": "Hard",
+    "tags": [
+      "Two Pointers",
+      "Design",
+      "Sorting",
+      "Heap (Priority Queue)",
+      "Data Stream"
+    ],
+    "solution": "import heapq\n\nclass MedianFinder:\n    # Max-heap for the lower half (negated), min-heap for the upper half.\n    def __init__(self):\n        self.low = []\n        self.high = []\n\n    def add_num(self, num):\n        heapq.heappush(self.low, -num)\n        heapq.heappush(self.high, -heapq.heappop(self.low))\n        if len(self.high) > len(self.low):\n            heapq.heappush(self.low, -heapq.heappop(self.high))\n\n    def find_median(self):\n        if len(self.low) > len(self.high):\n            return float(-self.low[0])\n        return (-self.low[0] + self.high[0]) / 2"
+  },
+  {
+    "id": 621,
+    "title": "Task Scheduler",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Greedy",
+      "Sorting",
+      "Heap (Priority Queue)",
+      "Counting"
+    ],
+    "solution": "from collections import Counter\n\ndef least_interval(tasks, n):\n    # Frame the schedule around the most frequent task(s).\n    counts = Counter(tasks).values()\n    max_count = max(counts)\n    tied = sum(1 for c in counts if c == max_count)\n    return max(len(tasks), (max_count - 1) * (n + 1) + tied)"
+  },
+  {
+    "id": 208,
+    "title": "Implement Trie (Prefix Tree)",
+    "difficulty": "Medium",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Design",
+      "Trie"
+    ],
+    "solution": "class Trie:\n    # Nested dicts; the '$' key marks the end of a word.\n    def __init__(self):\n        self.root = {}\n\n    def insert(self, word):\n        node = self.root\n        for ch in word:\n            node = node.setdefault(ch, {})\n        node['$'] = True\n\n    def _walk(self, text):\n        node = self.root\n        for ch in text:\n            if ch not in node:\n                return None\n            node = node[ch]\n        return node\n\n    def search(self, word):\n        node = self._walk(word)\n        return node is not None and '$' in node\n\n    def starts_with(self, prefix):\n        return self._walk(prefix) is not None"
+  },
+  {
+    "id": 78,
+    "title": "Subsets",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Backtracking",
+      "Bit Manipulation"
+    ],
+    "solution": "def subsets(nums):\n    # Backtracking: at each index decide to include or skip the element.\n    result = []\n    current = []\n\n    def backtrack(start):\n        result.append(current[:])\n        for i in range(start, len(nums)):\n            current.append(nums[i])\n            backtrack(i + 1)\n            current.pop()\n\n    backtrack(0)\n    return result"
+  },
+  {
+    "id": 39,
+    "title": "Combination Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Backtracking"
+    ],
+    "solution": "def combination_sum(candidates, target):\n    # Backtrack over sorted candidates; reuse is allowed, so recurse from the same index.\n    candidates.sort()\n    result = []\n    current = []\n\n    def backtrack(start, remaining):\n        if remaining == 0:\n            result.append(current[:])\n            return\n        for i in range(start, len(candidates)):\n            if candidates[i] > remaining:\n                break\n            current.append(candidates[i])\n            backtrack(i, remaining - candidates[i])\n            current.pop()\n\n    backtrack(0, target)\n    return result"
+  },
+  {
+    "id": 46,
+    "title": "Permutations",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Backtracking"
+    ],
+    "solution": "def permute(nums):\n    # Backtrack by swapping each remaining element into the current position.\n    result = []\n\n    def backtrack(first):\n        if first == len(nums):\n            result.append(nums[:])\n            return\n        for i in range(first, len(nums)):\n            nums[first], nums[i] = nums[i], nums[first]\n            backtrack(first + 1)\n            nums[first], nums[i] = nums[i], nums[first]\n\n    backtrack(0)\n    return result"
+  },
+  {
+    "id": 79,
+    "title": "Word Search",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "String",
+      "Backtracking",
+      "Depth-First Search",
+      "Matrix"
+    ],
+    "solution": "def exist(board, word):\n    # DFS from every cell, temporarily marking visited cells.\n    rows, cols = len(board), len(board[0])\n\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if r < 0 or c < 0 or r >= rows or c >= cols or board[r][c] != word[i]:\n            return False\n        saved = board[r][c]\n        board[r][c] = '#'\n        found = (dfs(r + 1, c, i + 1) or dfs(r - 1, c, i + 1)\n                 or dfs(r, c + 1, i + 1) or dfs(r, c - 1, i + 1))\n        board[r][c] = saved\n        return found\n\n    return any(dfs(r, c, 0) for r in range(rows) for c in range(cols))"
+  },
+  {
+    "id": 51,
+    "title": "N-Queens",
+    "difficulty": "Hard",
+    "tags": [
+      "Array",
+      "Backtracking"
+    ],
+    "solution": "def solve_n_queens(n):\n    # Row-by-row backtracking with sets for occupied columns and diagonals.\n    result = []\n    queens = []\n    cols, diag, anti = set(), set(), set()\n\n    def backtrack(row):\n        if row == n:\n            result.append(['.' * c + 'Q' + '.' * (n - c - 1) for c in queens])\n            return\n        for c in range(n):\n            if c in cols or row - c in diag or row + c in anti:\n                continue\n            cols.add(c); diag.add(row - c); anti.add(row + c)\n            queens.append(c)\n            backtrack(row + 1)\n            queens.pop()\n            cols.remove(c); diag.remove(row - c); anti.remove(row + c)\n\n    backtrack(0)\n    return result"
+  },
+  {
+    "id": 200,
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find",
+      "Matrix"
+    ],
+    "solution": "def num_islands(grid):\n    # Iterative DFS that sinks each visited island. O(M*N) time.\n    if not grid:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] != '1':\n                continue\n            count += 1\n            stack = [(r, c)]\n            grid[r][c] = '0'\n            while stack:\n                cr, cc = stack.pop()\n                for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                    nr, nc = cr + dr, cc + dc\n                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                        grid[nr][nc] = '0'\n                        stack.append((nr, nc))\n    return count"
+  },
+  {
+    "id": 200,
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find",
+      "Matrix"
+    ],
+    "solution": "def num_islands(grid):\n    # Union-Find over land cells; each union merges two islands into one.\n    rows, cols = len(grid), len(grid[0])\n    parent = {}\n\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]\n            x = parent[x]\n        return x\n\n    count = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                parent[(r, c)] = (r, c)\n                count += 1\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] != '1':\n                continue\n            for nr, nc in ((r + 1, c), (r, c + 1)):\n                if nr < rows and nc < cols and grid[nr][nc] == '1':\n                    a, b = find((r, c)), find((nr, nc))\n                    if a != b:\n                        parent[a] = b\n                        count -= 1\n    return count"
+  },
+  {
+    "id": 695,
+    "title": "Max Area of Island",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Union Find",
+      "Matrix"
+    ],
+    "solution": "def max_area_of_island(grid):\n    # Recursive flood fill returning the size of each island.\n    rows, cols = len(grid), len(grid[0])\n\n    def area(r, c):\n        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] != 1:\n            return 0\n        grid[r][c] = 0\n        return 1 + area(r + 1, c) + area(r - 1, c) + area(r, c + 1) + area(r, c - 1)\n\n    return max((area(r, c) for r in range(rows) for c in range(cols)), default=0)"
+  },
+  {
+    "id": 994,
+    "title": "Rotting Oranges",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Breadth-First Search",
+      "Matrix"
+    ],
+    "solution": "from collections import deque\n\ndef oranges_rotting(grid):\n    # Multi-source BFS from all initially rotten oranges.\n    rows, cols = len(grid), len(grid[0])\n    queue = deque()\n    fresh = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 2:\n                queue.append((r, c))\n            elif grid[r][c] == 1:\n                fresh += 1\n    minutes = 0\n    while queue and fresh:\n        for _ in range(len(queue)):\n            r, c = queue.popleft()\n            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:\n                    grid[nr][nc] = 2\n                    fresh -= 1\n                    queue.append((nr, nc))\n        minutes += 1\n    return minutes if fresh == 0 else -1"
+  },
+  {
+    "id": 207,
+    "title": "Course Schedule",
+    "difficulty": "Medium",
+    "tags": [
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Graph",
+      "Topological Sort"
+    ],
+    "solution": "from collections import deque\n\ndef can_finish(num_courses, prerequisites):\n    # Kahn's algorithm: all courses get scheduled iff the graph has no cycle.\n    graph = [[] for _ in range(num_courses)]\n    indegree = [0] * num_courses\n    for course, prereq in prerequisites:\n        graph[prereq].append(course)\n        indegree[course] += 1\n    queue = deque(i for i in range(num_courses) if indegree[i] == 0)\n    taken = 0\n    while queue:\n        node = queue.popleft()\n        taken += 1\n        for nxt in graph[node]:\n            indegree[nxt] -= 1\n            if indegree[nxt] == 0:\n                queue.append(nxt)\n    return taken == num_courses"
+  },
+  {
+    "id": 210,
+    "title": "Course Schedule II",
+    "difficulty": "Medium",
+    "tags": [
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Graph",
+      "Topological Sort"
+    ],
+    "solution": "def find_order(num_courses, prerequisites):\n    # DFS topological sort with three colors to detect cycles.\n    graph = [[] for _ in range(num_courses)]\n    for course, prereq in prerequisites:\n        graph[prereq].append(course)\n    state = [0] * num_courses  # 0 = unvisited, 1 = visiting, 2 = done\n    order = []\n\n    def dfs(node):\n        if state[node] == 1:\n            return False\n        if state[node] == 2:\n            return True\n        state[node] = 1\n        for nxt in graph[node]:\n            if not dfs(nxt):\n                return False\n        state[node] = 2\n        order.append(node)\n        return True\n\n    for course in range(num_courses):\n        if not dfs(course):\n            return []\n    return order[::-1]"
+  },
+  {
+    "id": 127,
+    "title": "Word Ladder",
+    "difficulty": "Hard",
+    "tags": [
+      "Hash Table",
+      "String",
+      "Breadth-First Search"
+    ],
+    "solution": "from collections import deque\n\ndef ladder_length(begin_word, end_word, word_list):\n    # BFS over words, generating neighbours by changing one letter at a time.\n    words = set(word_list)\n    if end_word not in words:\n        return 0\n    queue = deque([(begin_word, 1)])\n    seen = {begin_word}\n    while queue:\n        word, steps = queue.popleft()\n        if word == end_word:\n            return steps\n        for i in range(len(word)):\n            for ch in 'abcdefghijklmnopqrstuvwxyz':\n                candidate = word[:i] + ch + word[i + 1:]\n                if candidate in words and candidate not in seen:\n                    seen.add(candidate)\n                    queue.append((candidate, steps + 1))\n    return 0"
+  },
+  {
+    "id": 743,
+    "title": "Network Delay Time",
+    "difficulty": "Medium",
+    "tags": [
+      "Depth-First Search",
+      "Breadth-First Search",
+      "Graph",
+      "Heap (Priority Queue)",
+      "Shortest Path"
+    ],
+    "solution": "import heapq\n\ndef network_delay_time(times, n, k):\n    # Dijkstra's algorithm from k; the answer is the largest shortest distance.\n    graph = {i: [] for i in range(1, n + 1)}\n    for u, v, w in times:\n        graph[u].append((v, w))\n    dist = {}\n    heap = [(0, k)]\n    while heap:\n        d, node = heapq.heappop(heap)\n        if node in dist:\n            continue\n        dist[node] = d\n        for nxt, w in graph[node]:\n            if nxt not in dist:\n                heapq.heappush(heap, (d + w, nxt))\n    return max(dist.values()) if len(dist) == n else -1"
+  },
+  {
+    "id": 70,
+    "title": "Climbing Stairs",
+    "difficulty": "Easy",
+    "tags": [
+      "Math",
+      "Dynamic Programming",
+      "Memoization"
+    ],
+    "solution": "def climb_stairs(n):\n    # Bottom-up Fibonacci with two rolling variables. O(N) time, O(1) space.\n    one, two = 1, 1\n    for _ in range(n - 1):\n        one, two = one + two, one\n    return one"
+  },
+  {
+    "id": 70,
+    "title": "Climbing Stairs",
+    "difficulty": "Easy",
+    "tags": [
+      "Math",
+      "Dynamic Programming",
+      "Memoization"
+    ],
+    "solution": "from functools import lru_cache\n\ndef climb_stairs(n):\n    # Top-down recursion with memoization.\n    @lru_cache(maxsize=None)\n    def ways(step):\n        if step <= 1:\n            return 1\n        return ways(step - 1) + ways(step - 2)\n\n    return ways(n)"
+  },
+  {
+    "id": 198,
+    "title": "House Robber",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Dynamic Programming"
+    ],
+    "solution": "def rob(nums):\n    # dp over houses: best is max(skip this house, rob it + best two back).\n    prev, curr = 0, 0\n    for value in nums:\n        prev, curr = curr, max(curr, prev + value)\n    return curr"
+  },
+  {
+    "id": 5,
+    "title": "Longest Palindromic Substring",
+    "difficulty": "Medium",
+    "tags": [
+      "Two Pointers",
+      "String",
+      "Dynamic Programming"
+    ],
+    "solution": "def longest_palindrome(s):\n    # Expand around every center (odd and even lengths). O(N^2) time, O(1) space.\n    best_start, best_len = 0, 0\n    for center in range(len(s)):\n        for left, right in ((center, center), (center, center + 1)):\n            while left >= 0 and right < len(s) and s[left] == s[right]:\n                left -= 1\n                right += 1\n            if right - left - 1 > best_len:\n                best_start, best_len = left + 1, right - left - 1\n    return s[best_start:best_start + best_len]"
+  },
+  {
+    "id": 322,
+    "title": "Coin Change",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Dynamic Programming",
+      "Breadth-First Search"
+    ],
+    "solution": "def coin_change(coins, amount):\n    # Unbounded knapsack: dp[a] = fewest coins summing to a.\n    INF = amount + 1\n    dp = [0] + [INF] * amount\n    for a in range(1, amount + 1):\n        for coin in coins:\n            if coin <= a and dp[a - coin] + 1 < dp[a]:\n                dp[a] = dp[a - coin] + 1\n    return dp[amount] if dp[amount] != INF else -1"
+  },
+  {
+    "id": 139,
+    "title": "Word Break",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "String",
+      "Dynamic Programming",
+      "Trie",
+      "Memoization"
+    ],
+    "solution": "def word_break(s, word_dict):\n    # dp[i] is True when s[:i] can be segmented.\n    words = set(word_dict)\n    max_len = max(map(len, words), default=0)\n    dp = [True] + [False] * len(s)\n    for i in range(1, len(s) + 1):\n        for j in range(max(0, i - max_len), i):\n            if dp[j] and s[j:i] in words:\n                dp[i] = True\n                break\n    return dp[len(s)]"
+  },
+  {
+    "id": 300,
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search",
+      "Dynamic Programming"
+    ],
+    "solution": "def length_of_lis(nums):\n    # Quadratic DP: dp[i] = longest increasing subsequence ending at i. O(N^2) time.\n    if not nums:\n        return 0\n    dp = [1] * len(nums)\n    for i in range(len(nums)):\n        for j in range(i):\n            if nums[j] < nums[i]:\n                dp[i] = max(dp[i], dp[j] + 1)\n    return max(dp)"
+  },
+  {
+    "id": 300,
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Binary Search",
+      "Dynamic Programming"
+    ],
+    "solution": "import bisect\n\ndef length_of_lis(nums):\n    # Patience sorting: tails[k] is the smallest tail of an increasing run of length k+1. O(N log N).\n    tails = []\n    for value in nums:\n        index = bisect.bisect_left(tails, value)\n        if index == len(tails):\n            tails.append(value)\n        else:\n            tails[index] = value\n    return len(tails)"
+  },
+  {
+    "id": 62,
+    "title": "Unique Paths",
+    "difficulty": "Medium",
+    "tags": [
+      "Math",
+      "Dynamic Programming",
+      "Combinatorics"
+    ],
+    "solution": "def unique_paths(m, n):\n    # Rolling 1-D DP: paths to a cell = paths from above + paths from the left.\n    row = [1] * n\n    for _ in range(1, m):\n        for c in range(1, n):\n            row[c] += row[c - 1]\n    return row[-1]"
+  },
+  {
+    "id": 1143,
+    "title": "Longest Common Subsequence",
+    "difficulty": "Medium",
+    "tags": [
+      "String",
+      "Dynamic Programming"
+    ],
+    "solution": "def longest_common_subsequence(text1, text2):\n    # Classic 2-D DP table over prefixes.\n    m, n = len(text1), len(text2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if text1[i - 1] == text2[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[m][n]"
+  },
+  {
+    "id": 72,
+    "title": "Edit Distance",
+    "difficulty": "Medium",
+    "tags": [
+      "String",
+      "Dynamic Programming"
+    ],
+    "solution": "def min_distance(word1, word2):\n    # Levenshtein DP keeping only the previous row.\n    prev = list(range(len(word2) + 1))\n    for i in range(1, len(word1) + 1):\n        curr = [i] + [0] * len(word2)\n        for j in range(1, len(word2) + 1):\n            if word1[i - 1] == word2[j - 1]:\n                curr[j] = prev[j - 1]\n            else:\n                curr[j] = 1 + min(prev[j], curr[j - 1], prev[j - 1])\n        prev = curr\n    return prev[-1]"
+  },
+  {
+    "id": 53,
+    "title": "Maximum Subarray",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Divide and Conquer",
+      "Dynamic Programming"
+    ],
+    "solution": "def max_sub_array(nums):\n    # Kadane's algorithm: extend the running sum or restart at the current element.\n    best = current = nums[0]\n    for value in nums[1:]:\n        current = max(value, current + value)\n        best = max(best, current)\n    return best"
+  },
+  {
+    "id": 53,
+    "title": "Maximum Subarray",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Divide and Conquer",
+      "Dynamic Programming"
+    ],
+    "solution": "def max_sub_array(nums):\n    # Divide and conquer: best of left half, right half, or a sum crossing the middle. O(N log N).\n    def solve(lo, hi):\n        if lo == hi:\n            return nums[lo]\n        mid = (lo + hi) // 2\n        left_best = float('-inf')\n        total = 0\n        for i in range(mid, lo - 1, -1):\n            total += nums[i]\n            left_best = max(left_best, total)\n        right_best = float('-inf')\n        total = 0\n        for i in range(mid + 1, hi + 1):\n            total += nums[i]\n            right_best = max(right_best, total)\n        return max(solve(lo, mid), solve(mid + 1, hi), left_best + right_best)\n\n    return solve(0, len(nums) - 1)"
+  },
+  {
+    "id": 55,
+    "title": "Jump Game",
+    "difficulty": "Medium",
+    "tags": [
+      "Array",
+      "Dynamic Programming",
+      "Greedy"
+    ],
+    "solution": "def can_jump(nums):\n    # Greedy: track the farthest index reachable so far.\n    farthest = 0\n    for i, jump in enumerate(nums):\n        if i > farthest:\n            return False\n        farthest = max(farthest, i + jump)\n    return True"
+  },
+  {
+    "id": 136,
+    "title": "Single Number",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Bit Manipulation"
+    ],
+    "solution": "def single_number(nums):\n    # XOR cancels out pairs, leaving the unique value.\n    result = 0\n    for value in nums:\n        result ^= value\n    return result"
+  },
+  {
+    "id": 268,
+    "title": "Missing Number",
+    "difficulty": "Easy",
+    "tags": [
+      "Array",
+      "Hash Table",
+      "Math",
+      "Binary Search",
+      "Bit Manipulation",
+      "Sorting"
+    ],
+    "solution": "def missing_number(nums):\n    # Gauss sum of 0..n minus the actual sum.\n    n = len(nums)\n    return n * (n + 1) // 2 - sum(nums)"
+  }
+]

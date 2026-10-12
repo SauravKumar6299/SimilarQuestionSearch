@@ -1,0 +1,7 @@
+streamlit
+chromadb
+transformers
+torch
+sentence-transformers
+scikit-learn
+python-dotenv
